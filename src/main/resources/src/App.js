@@ -1,4 +1,7 @@
 import React, {Component} from 'react';
+
+import Permissao from './components/permissao/Permissao'
+
 import classNames from 'classnames';
 import {AppTopbar} from './AppTopbar';
 import {AppFooter} from './AppFooter';
@@ -26,7 +29,6 @@ import 'fullcalendar/dist/fullcalendar.css';
 import './layout/layout.css';
 import './App.css';
 
-import Home from './Home'
 
 class App extends Component {
 
@@ -99,7 +101,7 @@ class App extends Component {
 
     createMenu() {
         this.menu = [
-            {label: 'Dashboard', icon: 'pi pi-fw pi-home', command: () => {window.location = '#/'}},
+            {label: 'Permissões', icon: 'pi pi-fw pi-home', command: () => {window.location = '#/permissoes'}},
             {
                 label: 'Menu Modes', icon: 'pi pi-fw pi-cog',
                 items: [
@@ -239,7 +241,8 @@ class App extends Component {
                 </div>
 
                 <div className="layout-main">
-                    <Route path="/" exact component={Home} />
+                    <Route path="/" exact component={Dashboard} />
+                    <Route path="/permissoes" exact component={Permissao} />
                     <Route path="/forms" component={FormsDemo} />
                     <Route path="/sample" component={SampleDemo} />
                     <Route path="/data" component={DataDemo} />
