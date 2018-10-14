@@ -1,1 +1,5 @@
 /* Place your extensions here to make migration to a new release easier. */
+
+.colunaAcoes{
+    width: 100px;
+}
