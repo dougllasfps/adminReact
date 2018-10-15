@@ -38,6 +38,8 @@ public class ValidationException extends RuntimeException {
     }
 
     public void addError(String message){
+        if(this.errors == null)
+            this.errors = new ArrayList<>();
         this.errors.add(message);
     }
 

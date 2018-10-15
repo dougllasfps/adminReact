@@ -1,9 +1,27 @@
 import axios from 'axios'
 import {update_mode, insert_mode, search_mode} from '../../main/constants/constants'
+import {initialize} from 'redux-form'
 
 const BASE_URL = 'http://localhost:8080/api/permissoes'
 
 const NEW_ENTITY = {descricao:'', label: ''}
+
+export function submit(permissao){
+    console.log('permissao para atualizar', permissao)
+
+    let id = permissao.id ? permissao.id : '';
+    let method = id ? 'put' : 'post'
+    return dispatch => {
+        axios[method](`${BASE_URL}/${id}`,permissao )
+            .then( resp =>{
+                console.log('success: ', resp)
+                dispatch( pageMode(search_mode) )
+            }).catch( e => {
+                console.log('erro', e)
+                console.log('response', e.response)
+            })
+    }
+}
 
 export function getList(){
     let request = axios.get(`${BASE_URL}`)
@@ -35,10 +53,10 @@ function pageMode(mode){
 }
 
 function toForm(permissao){
-    return {
+    return [initialize('permissoesForm', permissao),{
         type: 'PERMISSAO_FORM',
         payload: permissao
-    }
+    }]
 }
 
 export function cancel(){
