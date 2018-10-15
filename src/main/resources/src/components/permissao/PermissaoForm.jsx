@@ -1,5 +1,4 @@
 import React from 'react'
-import {InputText} from "primereact/inputtext";
 import {Field, reduxForm} from 'redux-form'
 
 import {connect} from 'react-redux'
@@ -11,10 +10,14 @@ import {update_mode, insert_mode} from '../../main/constants/constants'
 
 
 class PermissaoForm extends React.Component{
+    constructor(props) {
+        super(props)
+    }
+
     render(){
 
         let pageMode = this.props.pageMode || insert_mode;
-        let submitLabel = pageMode == update_mode ? 'Atualizar' : 'Salvar';
+        let submitLabel = pageMode === update_mode ? 'Atualizar' : 'Salvar';
 
         return (
             <form role="form" onSubmit={this.props.handleSubmit}>
@@ -22,13 +25,13 @@ class PermissaoForm extends React.Component{
                 <div className="p-grid p-fluid">
                     <div className="p-col-12 p-lg-12">
                         <div className="card card-w-title">
-                            <h1>Cadastro de Permissão</h1>
+                            <h1>Cadastro de Permissão </h1>
                             <div className="p-grid">
                                 <div className="p-md-6">
-                                    <Field  component={InputText} name="descricao" placeholder="Descrição"/>
+                                    <Field  component="input" name="descricao" placeholder="Descrição" className="p-inputtext p-component"/>
                                 </div>
                                 <div className="p-md-6">
-                                    <Field  component={InputText} name="label"  placeholder="Label" />
+                                    <Field  component="input" name="label"  placeholder="Label" className="p-inputtext p-component"/>
                                 </div>
                                 <div className="p-md-2">
                                     <Field type="submit" component={Button} label={submitLabel} className="p-button-secondary" />

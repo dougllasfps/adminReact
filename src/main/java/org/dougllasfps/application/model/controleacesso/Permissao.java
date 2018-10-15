@@ -22,13 +22,13 @@ public class Permissao
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
-    @NotEmpty
+    @NotNull(message = "{campo.descricao.obrigatorio}")
+    @NotEmpty(message = "{campo.descricao.obrigatorio}")
     @Column(name = "descricao")
     private String descricao;
 
-    @NotNull
-    @NotEmpty
+    @NotNull(message = "{campo.label.obrigatorio}")
+    @NotEmpty(message = "{campo.label.obrigatorio}")
     @Column(name = "label")
     private String label;
 

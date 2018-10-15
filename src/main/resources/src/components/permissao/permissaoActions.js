@@ -1,4 +1,6 @@
 import axios from 'axios'
+import {showSuccessMessage, showErrorMessage} from '../messages/messages'
+
 import {update_mode, insert_mode, search_mode} from '../../main/constants/constants'
 import {initialize} from 'redux-form'
 
@@ -6,19 +8,21 @@ const BASE_URL = 'http://localhost:8080/api/permissoes'
 
 const NEW_ENTITY = {descricao:'', label: ''}
 
-export function submit(permissao){
-    console.log('permissao para atualizar', permissao)
 
+
+export function submit(permissao){
     let id = permissao.id ? permissao.id : '';
     let method = id ? 'put' : 'post'
     return dispatch => {
         axios[method](`${BASE_URL}/${id}`,permissao )
             .then( resp =>{
-                console.log('success: ', resp)
+               
+                showSuccessMessage('Registro salvo com sucesso.')
                 dispatch( pageMode(search_mode) )
             }).catch( e => {
-                console.log('erro', e)
-                console.log('response', e.response)
+                e.response.data.errors.forEach(error => {
+                    showErrorMessage(error)
+                });
             })
     }
 }

@@ -28,6 +28,9 @@ import 'primeflex/primeflex.css';
 import 'fullcalendar/dist/fullcalendar.css';
 import './layout/layout.css';
 import './App.css';
+import 'toastr/build/toastr.min'
+import 'toastr/build/toastr.css'
+import './scripts'
 
 
 class App extends Component {

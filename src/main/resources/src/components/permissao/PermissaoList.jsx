@@ -2,6 +2,7 @@ import React from 'react'
 import {DataTable} from 'primereact/datatable';
 import {Button} from 'primereact/button';
 import {Column} from 'primereact/column';
+import {Messages} from 'primereact/messages'
 
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
@@ -13,6 +14,7 @@ class PermissaoList extends React.Component{
     constructor(props){
         super(props)
         this.actionButtons = this.actionButtons.bind(this);
+        this.showSuccess = this.showSuccess.bind(this);
     }
 
     componentWillMount(){
@@ -23,9 +25,13 @@ class PermissaoList extends React.Component{
         return (
             <div>
                 <Button type="button" icon="pi pi-pencil" className="p-button-secondary" onClick={() => this.props.prepareEditar(rowData)}  />
-                <Button type="button" icon="pi pi-trash"  className="p-button-danger" />
+                <Button type="button" icon="pi pi-trash"  className="p-button-danger" onClick={() => this.showSuccess()} />
             </div>
         )
+    }
+
+    showSuccess() {
+        this.messages.show({severity: 'success', summary: 'Success Message', detail: 'Order submitted'});
     }
 
     render(){
@@ -33,6 +39,7 @@ class PermissaoList extends React.Component{
 
         return (
             <div className="p-grid p-fluid">
+               
 
                 <div className="p-col-12 p-lg-12">
                     <div className="card card-w-title">

@@ -10,6 +10,10 @@ import {bindActionCreators} from 'redux'
 import {cancel, submit} from './permissaoActions'
 
 class Permissao extends React.Component{
+    constructor(props) {
+        super(props)
+    }
+
     render(){
         let pageMode = this.props.pageMode || search_mode;
         return (
