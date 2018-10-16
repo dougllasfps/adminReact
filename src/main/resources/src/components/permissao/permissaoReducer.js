@@ -3,6 +3,8 @@ const INITIAL_STATE = { entity: {descricao: '', label : ''}, list : [], pageMode
 
 export default function(state = INITIAL_STATE, action) {
     switch (action.type) {
+        case 'PERMISSAO_FIND':
+            return {...state, permissoesList: action.payload.data.data}
         case 'PERMISSAO_ALL':
             return {...state, permissoesList: action.payload.data.data}
         case 'PERMISSAO_FORM':

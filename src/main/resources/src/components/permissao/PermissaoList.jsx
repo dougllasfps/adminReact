@@ -29,7 +29,7 @@ class PermissaoList extends React.Component{
     }
 
     componentWillMount(){
-        this.props.getList();
+        this.props.getList()
     }
 
     actionButtons(rowData, column) {
@@ -64,8 +64,6 @@ class PermissaoList extends React.Component{
         const value = target.type === 'checkbox' ? target.checked : target.value;
         const name = target.name;
 
-        console.log(`name ${name}, value ${value}`)
-
         this.setState({
             [name]: value
         });
@@ -80,6 +78,8 @@ class PermissaoList extends React.Component{
                 <Button label="Cancela"  icon="pi pi-times" onClick={this.hideDelete}    className="p-button-danger" />
             </div>
         );
+
+        let {descricao, label} = this.state;
 
         return (
             <div className="p-grid p-fluid">
@@ -116,7 +116,7 @@ class PermissaoList extends React.Component{
 
                                             <div className="p-md-2">
                                                 <span className="p-float-label">
-                                                    <Button label="Pesquisar" icon="pi pi-search" className="p-button-secondary" onClick={() => this.props.find({...this.state})} />
+                                                    <Button label="Pesquisar" icon="pi pi-search" className="p-button-secondary" onClick={() => this.props.find({descricao,label})} />
                                                 </span>
                                             </div>
 

@@ -23,14 +23,19 @@ public class Permissao
     private Long id;
 
     @NotNull(message = "{campo.descricao.obrigatorio}")
-    @NotEmpty(message = "{campo.descricao.obrigatorio}")
     @Column(name = "descricao")
     private String descricao;
 
     @NotNull(message = "{campo.label.obrigatorio}")
-    @NotEmpty(message = "{campo.label.obrigatorio}")
     @Column(name = "label")
     private String label;
+
+
+
+    public Permissao(String descricao, String label) {
+        this.descricao = descricao;
+        this.label = label;
+    }
 
     public Permissao() {}
 

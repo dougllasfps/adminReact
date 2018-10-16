@@ -23,8 +23,8 @@ public class PermissaoResource {
     private PermissaoService service;
 
     @GetMapping("/find")
-    public ResponseEntity find(@RequestBody Permissao filtro){
-        List<Permissao> result = service.find(filtro);
+    public ResponseEntity find(@RequestParam("descricao") String descricao, @RequestParam("label") String label){
+        List<Permissao> result = service.find(new Permissao(descricao, label));
 
         if(result.isEmpty()){
             return new ResponseEntity(ResponseData.ofWarning("Nenhum item encontrado."), HttpStatus.NOT_FOUND);
