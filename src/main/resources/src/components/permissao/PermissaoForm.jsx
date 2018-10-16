@@ -10,31 +10,38 @@ import {update_mode, insert_mode} from '../../main/constants/constants'
 
 
 class PermissaoForm extends React.Component{
-    constructor(props) {
-        super(props)
-    }
 
     render(){
 
         let pageMode = this.props.pageMode || insert_mode;
         let submitLabel = pageMode === update_mode ? 'Atualizar' : 'Salvar';
+        let pageTitle = pageMode === update_mode ? 'Atualização de Permissão' : 'Cadastro de Permissão';
 
         return (
-            <form role="form" onSubmit={this.props.handleSubmit}>
+            <form onSubmit={this.props.handleSubmit}>
                 <Field component="input" type="hidden" name="id" />
                 <div className="p-grid p-fluid">
                     <div className="p-col-12 p-lg-12">
                         <div className="card card-w-title">
-                            <h1>Cadastro de Permissão </h1>
+                            <h1>{pageTitle}</h1>
+                            <br />
                             <div className="p-grid">
                                 <div className="p-md-6">
-                                    <Field  component="input" name="descricao" placeholder="Descrição" className="p-inputtext p-component"/>
+                                    <span className="p-float-label">
+                                        <Field id="inputDesc" component="input" name="descricao" className="p-inputtext p-component"/>
+                                        <label htmlFor="inputDesc">Descrição</label>
+                                    </span>
                                 </div>
                                 <div className="p-md-6">
-                                    <Field  component="input" name="label"  placeholder="Label" className="p-inputtext p-component"/>
+                                    <span className="p-float-label">
+                                        <Field id="inputLabel"  component="input" name="label"  className="p-inputtext p-component"/>
+                                        <label htmlFor="inputLabel">Label</label>
+                                    </span>
                                 </div>
                                 <div className="p-md-2">
-                                    <Field type="submit" component={Button} label={submitLabel} className="p-button-secondary" />
+                                    <Field type="submit" component="button" name="submitButton" className="p-button p-component p-button-secondary p-button-text-only" >
+                                        <span className="p-button-text p-c">{submitLabel}</span>
+                                    </Field>
                                 </div>
                                 <div className="p-md-2">
                                     <Button label="Cancelar" className="p-button-danger" onClick={() => this.props.cancel()} />

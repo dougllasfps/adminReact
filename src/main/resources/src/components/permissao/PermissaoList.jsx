@@ -2,19 +2,26 @@ import React from 'react'
 import {DataTable} from 'primereact/datatable';
 import {Button} from 'primereact/button';
 import {Column} from 'primereact/column';
-import {Messages} from 'primereact/messages'
-
+import {Dialog} from 'primereact/dialog';
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 
-import {getList, prepareEditar} from './permissaoActions'
+import {getList, prepareEditar, remove, prepareInsert} from './permissaoActions'
 
 class PermissaoList extends React.Component{
 
     constructor(props){
         super(props)
+        this.state = {
+            confirmDelete: false,
+            permissaoSelecionada: null
+        };
+
         this.actionButtons = this.actionButtons.bind(this);
-        this.showSuccess = this.showSuccess.bind(this);
+        this.showDelete = this.showDelete.bind(this);
+        this.hideDelete = this.hideDelete.bind(this);
+        this.prepareDelete = this.prepareDelete.bind(this);
+        this.confirmDelete = this.confirmDelete.bind(this);
     }
 
     componentWillMount(){
@@ -25,28 +32,55 @@ class PermissaoList extends React.Component{
         return (
             <div>
                 <Button type="button" icon="pi pi-pencil" className="p-button-secondary" onClick={() => this.props.prepareEditar(rowData)}  />
-                <Button type="button" icon="pi pi-trash"  className="p-button-danger" onClick={() => this.showSuccess()} />
+                <Button type="button" icon="pi pi-trash"  className="p-button-danger" onClick={() => this.prepareDelete(rowData) } />
             </div>
         )
     }
 
-    showSuccess() {
-        this.messages.show({severity: 'success', summary: 'Success Message', detail: 'Order submitted'});
+    prepareDelete(rowData){
+        this.setState({...this.state, permissaoSelecionada:rowData.id })
+        this.showDelete()
+    }
+
+    showDelete(event) {
+        this.setState({confirmDelete: true});
+    }
+
+    confirmDelete(){
+        this.props.remove(this.state.permissaoSelecionada)
+        this.hideDelete()
+    }
+
+    hideDelete(event) {
+        this.setState({confirmDelete: false});
     }
 
     render(){
         let permissoes = this.props.permissoes || [];
 
+        const confirmDeleteFooter = (
+            <div>
+                <Button label="Confirma" icon="pi pi-check" onClick={this.confirmDelete} className="p-button-secondary" />
+                <Button label="Cancela"  icon="pi pi-times" onClick={this.hideDelete} className="p-button-danger" />
+            </div>
+        );
+
         return (
             <div className="p-grid p-fluid">
-               
 
                 <div className="p-col-12 p-lg-12">
                     <div className="card card-w-title">
                         <h1>Permissões</h1>
                         <div className="p-grid">
+                            <div className="p-md-10" />
+                            <div className="p-md-2">
+                                <Button label="Novo" icon="pi pi-plus" onClick={this.props.prepareInsert}/>
+                            </div>
                             <div className="p-md-12">
-                                <DataTable value={permissoes} >
+                                <DataTable value={permissoes}
+                                           paginator={true}
+                                           rows={10}
+                                           rowsPerPageOptions={[5,10,20]} >
                                     <Column field="descricao" header="Descrição"/>
                                     <Column field="label" header="Label"/>
                                     <Column className="colunaAcoes" body={this.actionButtons} header=""/>
@@ -56,12 +90,24 @@ class PermissaoList extends React.Component{
                     </div>
                 </div>
 
+                <Dialog header="Confirmação"
+                        visible={this.state.confirmDelete}
+                        width="350px"
+                        modal={true}
+                        footer={confirmDeleteFooter}
+                        minY={70}
+                        onHide={this.hideDelete}
+                        maximizable={true}
+                        blockScroll={true}>
+                   Deseja deletar o registro?
+                </Dialog>
+
             </div>
         )
     }
 }
 
 const mapStateToProps = state => ({ permissoes: state.permissoes.permissoesList})
-const mapDispatchToProps = dispatch => bindActionCreators({getList, prepareEditar}, dispatch)
+const mapDispatchToProps = dispatch => bindActionCreators({getList, prepareEditar, remove, prepareInsert}, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps) (PermissaoList)

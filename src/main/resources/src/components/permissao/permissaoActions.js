@@ -6,9 +6,7 @@ import {initialize} from 'redux-form'
 
 const BASE_URL = 'http://localhost:8080/api/permissoes'
 
-const NEW_ENTITY = {descricao:'', label: ''}
-
-
+export const NEW_ENTITY = {descricao:'', label: ''}
 
 export function submit(permissao){
     let id = permissao.id ? permissao.id : '';
@@ -16,7 +14,6 @@ export function submit(permissao){
     return dispatch => {
         axios[method](`${BASE_URL}/${id}`,permissao )
             .then( resp =>{
-               
                 showSuccessMessage('Registro salvo com sucesso.')
                 dispatch( pageMode(search_mode) )
             }).catch( e => {
@@ -65,4 +62,20 @@ function toForm(permissao){
 
 export function cancel(){
     return pageMode(search_mode)
+}
+
+export function remove(id){
+    return dispatch => {
+        axios
+            .delete(`${BASE_URL}/${id}`)
+            .then( resp => {
+                showSuccessMessage('Registro removido com sucesso.')
+                dispatch(getList());
+            }).catch(e => {
+            e.response.data.errors.forEach(error => {
+                showErrorMessage(error)
+            });
+        })
+    }
+
 }

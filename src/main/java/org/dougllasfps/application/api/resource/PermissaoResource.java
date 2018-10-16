@@ -12,6 +12,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Arrays;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/permissoes")
@@ -61,5 +63,20 @@ public class PermissaoResource {
         } catch (ValidationException e) {
             return ResponseEntity.badRequest().body(ResponseData.of(e));
         }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity delete(@PathVariable("id") Long id){
+        Optional<Permissao> permissao = service.find(id);
+        if(permissao.isPresent()){
+            try {
+                service.delete(permissao.get());
+                return new ResponseEntity(HttpStatus.NO_CONTENT);
+            } catch (Exception e) {
+                return ResponseEntity.badRequest().body(ResponseData.ofError(e.getMessage()));
+            }
+        }
+
+        return ResponseEntity.badRequest().body(ResponseData.ofError("Entidade não encontrada para o id passado."));
     }
 }

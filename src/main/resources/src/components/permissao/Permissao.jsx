@@ -7,18 +7,15 @@ import PermissaoForm from "./PermissaoForm";
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 
-import {cancel, submit} from './permissaoActions'
+import {submit} from './permissaoActions'
 
 class Permissao extends React.Component{
-    constructor(props) {
-        super(props)
-    }
 
     render(){
         let pageMode = this.props.pageMode || search_mode;
         return (
             <div>
-                {pageMode == search_mode ? <PermissaoList /> : <PermissaoForm onSubmit={this.props.submit} />}
+                {pageMode === search_mode ? <PermissaoList /> : <PermissaoForm onSubmit={this.props.submit} />}
             </div>
         )
     }
