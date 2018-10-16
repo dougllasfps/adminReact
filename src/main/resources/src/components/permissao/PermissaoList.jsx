@@ -96,7 +96,7 @@ class PermissaoList extends React.Component{
 
                             <div className="p-md-12">
                                 <Accordion>
-                                    <AccordionTab header="Pesquisa">
+                                    <AccordionTab header="Campos Pesquisa">
                                         <br />
                                         <div className="p-grid">
 
