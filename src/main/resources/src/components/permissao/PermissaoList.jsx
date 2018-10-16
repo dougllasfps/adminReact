@@ -5,8 +5,10 @@ import {Column} from 'primereact/column';
 import {Dialog} from 'primereact/dialog';
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
+import {Accordion,AccordionTab} from 'primereact/accordion';
 
-import {getList, prepareEditar, remove, prepareInsert} from './permissaoActions'
+import { getList, prepareEditar, remove, prepareInsert, find } from './permissaoActions'
+import {InputText} from "primereact/inputtext";
 
 class PermissaoList extends React.Component{
 
@@ -14,7 +16,9 @@ class PermissaoList extends React.Component{
         super(props)
         this.state = {
             confirmDelete: false,
-            permissaoSelecionada: null
+            permissaoSelecionada: null,
+            descricao: '',
+            label: ''
         };
 
         this.actionButtons = this.actionButtons.bind(this);
@@ -55,13 +59,25 @@ class PermissaoList extends React.Component{
         this.setState({confirmDelete: false});
     }
 
+    handleInputChange(event) {
+        const target = event.target;
+        const value = target.type === 'checkbox' ? target.checked : target.value;
+        const name = target.name;
+
+        console.log(`name ${name}, value ${value}`)
+
+        this.setState({
+            [name]: value
+        });
+    }
+
     render(){
         let permissoes = this.props.permissoes || [];
 
         const confirmDeleteFooter = (
             <div>
                 <Button label="Confirma" icon="pi pi-check" onClick={this.confirmDelete} className="p-button-secondary" />
-                <Button label="Cancela"  icon="pi pi-times" onClick={this.hideDelete} className="p-button-danger" />
+                <Button label="Cancela"  icon="pi pi-times" onClick={this.hideDelete}    className="p-button-danger" />
             </div>
         );
 
@@ -73,9 +89,42 @@ class PermissaoList extends React.Component{
                         <h1>Permissões</h1>
                         <div className="p-grid">
                             <div className="p-md-10" />
+
                             <div className="p-md-2">
                                 <Button label="Novo" icon="pi pi-plus" onClick={this.props.prepareInsert}/>
                             </div>
+
+                            <div className="p-md-12">
+                                <Accordion>
+                                    <AccordionTab header="Pesquisa">
+                                        <br />
+                                        <div className="p-grid">
+
+                                            <div className="p-md-6">
+                                                <span className="p-float-label">
+                                                    <InputText id="inputDesc" name="descricao" onChange={this.handleInputChange.bind(this)} />
+                                                    <label htmlFor="inputDesc">Descrição</label>
+                                                </span>
+                                            </div>
+
+                                            <div className="p-md-6">
+                                                <span className="p-float-label">
+                                                    <InputText id="inputLabel" name="label" onChange={this.handleInputChange.bind(this)} />
+                                                    <label htmlFor="inputLabel">Label</label>
+                                                </span>
+                                            </div>
+
+                                            <div className="p-md-2">
+                                                <span className="p-float-label">
+                                                    <Button label="Pesquisar" icon="pi pi-search" className="p-button-secondary" onClick={() => this.props.find({...this.state})} />
+                                                </span>
+                                            </div>
+
+                                        </div>
+                                    </AccordionTab>
+                                </Accordion>
+                            </div>
+
                             <div className="p-md-12">
                                 <DataTable value={permissoes}
                                            paginator={true}
@@ -108,6 +157,6 @@ class PermissaoList extends React.Component{
 }
 
 const mapStateToProps = state => ({ permissoes: state.permissoes.permissoesList})
-const mapDispatchToProps = dispatch => bindActionCreators({getList, prepareEditar, remove, prepareInsert}, dispatch)
+const mapDispatchToProps = dispatch => bindActionCreators({getList, prepareEditar, remove, prepareInsert, find}, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps) (PermissaoList)

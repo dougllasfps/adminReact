@@ -11,6 +11,7 @@ public class ResponseData {
 
     private Object data;
     private List<String> errors;
+    private List<String> warnings;
 
     public static ResponseData of(Object data){
         return new ResponseData(data);
@@ -20,6 +21,13 @@ public class ResponseData {
         List<String> errors = Arrays.asList(error);
         ResponseData responseData = new ResponseData();
         responseData.setErrors(errors);
+        return responseData;
+    }
+
+    public static ResponseData ofWarning(String warning){
+        List<String> warnings = Arrays.asList(warning);
+        ResponseData responseData = new ResponseData();
+        responseData.setWarnings(warnings);
         return responseData;
     }
 
@@ -56,5 +64,15 @@ public class ResponseData {
 
     public void setErrors(List<String> errors) {
         this.errors = errors;
+    }
+
+    public List<String> getWarnings() {
+        if(warnings == null)
+            warnings = new ArrayList<>();
+        return warnings;
+    }
+
+    public void setWarnings(List<String> warnings) {
+        this.warnings = warnings;
     }
 }

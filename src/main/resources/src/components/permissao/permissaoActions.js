@@ -8,6 +8,15 @@ const BASE_URL = 'http://localhost:8080/api/permissoes'
 
 export const NEW_ENTITY = {descricao:'', label: ''}
 
+export function find(permissao){
+    console.log(`Permissao find ${JSON.stringify(permissao)}`)
+    let request = axios.get(`${BASE_URL}/find`, JSON.stringify(permissao))
+    return {
+        type: 'PERMISSAO_ALL',
+        payload: request
+    }
+}
+
 export function submit(permissao){
     let id = permissao.id ? permissao.id : '';
     let method = id ? 'put' : 'post'

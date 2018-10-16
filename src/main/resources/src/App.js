@@ -21,6 +21,8 @@ import {MiscDemo} from './components/MiscDemo';
 import {EmptyPage} from './components/EmptyPage';
 import {Documentation} from "./components/Documentation";
 import {ScrollPanel} from 'primereact/components/scrollpanel/ScrollPanel';
+import PainelAdmin from './components/paineladmin/PainelAdmin'
+
 import 'primereact/resources/themes/nova-light/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
@@ -105,6 +107,7 @@ class App extends Component {
     createMenu() {
         this.menu = [
             {label: 'Permissões', icon: 'pi pi-fw pi-home', command: () => {window.location = '#/permissoes'}},
+            {label: 'Administração', icon: 'pi pi-fw pi-home', command: () => {window.location = '#/painelAdmin'}},
             {
                 label: 'Menu Modes', icon: 'pi pi-fw pi-cog',
                 items: [
@@ -245,6 +248,7 @@ class App extends Component {
 
                 <div className="layout-main">
                     <Route path="/" exact component={Dashboard} />
+                    <Route path="/painelAdmin" exact component={PainelAdmin} />
                     <Route path="/permissoes" exact component={Permissao} />
                     <Route path="/forms" component={FormsDemo} />
                     <Route path="/sample" component={SampleDemo} />
