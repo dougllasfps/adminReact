@@ -56,7 +56,7 @@ export default class DefaultList extends React.Component{
             </div>
         );
 
-        let colunaAcoes = {body: this.actionButtons, header: '',className: 'colunaAcoes', field : 'acao'};
+        let colunaAcoes = {body: this.actionButtons, header: '',className: 'colunaAcoes', field : 'acaoId'};
 
         let cols = this.props.columns || [];
         cols.push(colunaAcoes)
