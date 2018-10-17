@@ -1,12 +1,11 @@
 import React from 'react'
 
-import {Button} from 'primereact/button';
 import {InputText} from "primereact/inputtext";
 
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 
-import DefaultList from '../templates/DefaultList'
+import DefaultListPage from '../templates/DefaultListPage'
 
 import { getList, prepareEditar, remove, prepareInsert, find } from './permissaoActions'
 
@@ -19,42 +18,11 @@ class PermissaoList extends React.Component{
             label: ''
         };
 
-        this.actionButtons = this.actionButtons.bind(this);
-        this.showDelete = this.showDelete.bind(this);
-        this.hideDelete = this.hideDelete.bind(this);
-        this.prepareDelete = this.prepareDelete.bind(this);
-        this.confirmDelete = this.confirmDelete.bind(this);
+        this.handleInputChange = this.handleInputChange.bind(this);
     }
 
     componentWillMount(){
         this.props.getList()
-    }
-
-    actionButtons(rowData, column) {
-        return (
-            <div>
-                <Button type="button" icon="pi pi-pencil" className="p-button-secondary" onClick={() => this.props.prepareEditar(rowData)}  />
-                <Button type="button" icon="pi pi-trash"  className="p-button-danger" onClick={() => this.prepareDelete(rowData) } />
-            </div>
-        )
-    }
-
-    prepareDelete(rowData){
-        this.setState({...this.state, permissaoSelecionada:rowData.id })
-        this.showDelete()
-    }
-
-    showDelete(event) {
-        this.setState({confirmDelete: true});
-    }
-
-    confirmDelete(){
-        this.props.remove(this.state.permissaoSelecionada)
-        this.hideDelete()
-    }
-
-    hideDelete(event) {
-        this.setState({confirmDelete: false});
     }
 
     handleInputChange(event) {
@@ -81,9 +49,10 @@ class PermissaoList extends React.Component{
 
         return (
 
-            <DefaultList prepareInsert={this.props.prepareInsert}
+            <DefaultListPage
+                         prepareInsert={this.props.prepareInsert}
                          prepareEditar={this.props.prepareEditar}
-                         findAction={() =>this.props.find(filtro)}
+                         findAction={() => this.props.find(filtro)}
                          remove={this.props.remove}
                          list={permissoes}
                          columns={cols} >
@@ -98,7 +67,7 @@ class PermissaoList extends React.Component{
                     </div>
                 </div>
 
-            </DefaultList>
+            </DefaultListPage>
 
         )
     }

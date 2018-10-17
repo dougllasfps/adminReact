@@ -1,7 +1,7 @@
 import React from 'react'
 import {Field, reduxForm} from 'redux-form'
 
-import DefaultForm from '../../components/templates/DefaultForm'
+import DefaultFormPage from '../../components/templates/DefaultFormPage'
 
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
@@ -13,13 +13,17 @@ import {update_mode, insert_mode} from '../../main/constants/constants'
 class PermissaoForm extends React.Component{
 
     render(){
-
         let pageMode = this.props.pageMode || insert_mode;
         let submitLabel = pageMode === update_mode ? 'Atualizar' : 'Salvar';
         let pageTitle = pageMode === update_mode ? 'Atualização de Permissão' : 'Cadastro de Permissão';
 
         return (
-            <DefaultForm handleCancel={this.props.cancel} pageTitle={pageTitle} submitLabel={submitLabel} handleSubmit={this.props.handleSubmit}>
+            <DefaultFormPage
+                handleSubmit={this.props.handleSubmit}
+                handleCancel={this.props.cancel}
+                pageTitle={pageTitle}
+                submitLabel={submitLabel} >
+
                 <div className="p-md-6">
                     <span className="p-float-label">
                         <Field id="inputDesc" component="input" name="descricao" className="p-inputtext p-component"/>
@@ -32,7 +36,8 @@ class PermissaoForm extends React.Component{
                         <label htmlFor="inputLabel">Label</label>
                     </span>
                 </div>
-            </DefaultForm>
+
+            </DefaultFormPage>
         )
     }
 }

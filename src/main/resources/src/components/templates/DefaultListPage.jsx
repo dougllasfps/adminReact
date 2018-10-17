@@ -93,12 +93,11 @@ export default class DefaultList extends React.Component{
                             <div className="p-md-12">
                                 <Accordion>
                                     <AccordionTab header="Campos Pesquisa">
+                                        {this.props.children}
                                         <br />
 
-                                        {this.props.children}
-
                                         <div className="p-grid">
-                                            <div className="p-m-2">
+                                            <div className="p-m-2 btnPesquisa">
                                                 <Button label="Pesquisar" icon="pi pi-search" className="p-button-secondary" onClick={this.props.findAction} />
                                             </div>
                                         </div>

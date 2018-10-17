@@ -2,7 +2,7 @@ import React from 'react'
 import {Field} from "redux-form";
 import {Button} from "primereact/button";
 
-export default class DefaultForm extends React.Component{
+export default class DefaultFormPage extends React.Component{
 
     render(){
         return(
