@@ -1,5 +1,5 @@
 import axios from 'axios'
-import {showSuccessMessage, showErrorMessage} from '../messages/messages'
+import {showSuccessMessage, showErrorMessage, showWarnMessage} from '../messages/messages'
 
 import {update_mode, insert_mode, search_mode} from '../../main/constants/constants'
 import {initialize} from 'redux-form'
@@ -7,6 +7,21 @@ import {initialize} from 'redux-form'
 const BASE_URL = 'http://localhost:8080/api/permissoes'
 
 export const NEW_ENTITY = {descricao:'', label: ''}
+
+export function find(permissao){
+    let url = `${BASE_URL}/find?descricao=${permissao.descricao}&label=${permissao.label}`;
+    let request = axios.get(url)
+                .catch(error => {
+                    error.response.data.warnings.forEach( w =>{
+                        showWarnMessage(w)
+                    })
+                })
+    return {
+        type: 'PERMISSAO_FIND',
+        payload: request
+    }
+
+}
 
 export function submit(permissao){
     let id = permissao.id ? permissao.id : '';

@@ -12,7 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -21,6 +21,17 @@ public class PermissaoResource {
 
     @Autowired
     private PermissaoService service;
+
+    @GetMapping("/find")
+    public ResponseEntity find(@RequestParam("descricao") String descricao, @RequestParam("label") String label){
+        List<Permissao> result = service.find(new Permissao(descricao, label));
+
+        if(result.isEmpty()){
+            return new ResponseEntity(ResponseData.ofWarning("Nenhum item encontrado."), HttpStatus.NOT_FOUND);
+        }
+
+        return ResponseEntity.ok(ResponseData.of(result));
+    }
 
     @GetMapping
     public ResponseEntity<ResponseData> findAll(){
