@@ -3,6 +3,8 @@ import {Button} from "primereact/button";
 import {DataTable} from "primereact/datatable";
 import {Column} from "primereact/column";
 import {Dialog} from "primereact/dialog";
+import {Accordion,AccordionTab} from 'primereact/accordion';
+
 
 export default class DefaultList extends React.Component{
 
@@ -18,6 +20,7 @@ export default class DefaultList extends React.Component{
         this.hideDelete = this.hideDelete.bind(this);
         this.prepareDelete = this.prepareDelete.bind(this);
         this.confirmDelete = this.confirmDelete.bind(this);
+        this.generateDynamicColumns = this.generateDynamicColumns.bind(this)
     }
 
     actionButtons(rowData, column) {
@@ -47,6 +50,25 @@ export default class DefaultList extends React.Component{
         this.setState({confirmDelete: false});
     }
 
+    generateDynamicColumns () {
+        let actionButtonsBody = this.props.actionButtons ? this.props.actionButtons : this.actionButtons;
+        let colunaAcoes = {body: actionButtonsBody, header: '', className: 'colunaAcoes', field: 'acaoId'};
+
+        let cols = [];
+
+        if(this.props.columns){
+            this.props.columns.forEach( c => cols.push(c) );
+        }
+
+        cols.push(colunaAcoes)
+
+        let dynamicColumns = cols.map((col, i) => {
+            return <Column key={col.field} field={col.field} header={col.header} body={col.body} className={col.className} />
+        });
+
+        return dynamicColumns;
+    }
+
     render(){
 
         const confirmDeleteFooter = (
@@ -56,14 +78,7 @@ export default class DefaultList extends React.Component{
             </div>
         );
 
-        let colunaAcoes = {body: this.actionButtons, header: '',className: 'colunaAcoes', field : 'acaoId'};
-
-        let cols = this.props.columns || [];
-        cols.push(colunaAcoes)
-
-        let dynamicColumns = cols.map((col,i) => {
-            return <Column key={col.field} field={col.field} header={col.header} body={col.body} className={col.className} />;
-        });
+        let dynamicColumns = this.generateDynamicColumns();
 
         return(
             <div className="p-grid p-fluid">
@@ -76,10 +91,26 @@ export default class DefaultList extends React.Component{
                                 <Button label="Novo" icon="pi pi-plus" onClick={this.props.prepareInsert}/>
                             </div>
                             <div className="p-md-12">
+                                <Accordion>
+                                    <AccordionTab header="Campos Pesquisa">
+                                        <br />
+
+                                        {this.props.children}
+
+                                        <div className="p-grid">
+                                            <div className="p-m-2">
+                                                <Button label="Pesquisar" icon="pi pi-search" className="p-button-secondary" onClick={this.props.findAction} />
+                                            </div>
+                                        </div>
+
+                                    </AccordionTab>
+                                </Accordion>
+                            </div>
+                            <div className="p-md-12">
                                 <DataTable value={this.props.list}
                                            paginator={true}
                                            rows={10}
-                                           rowsPerPageOptions={[5,10,20]} >
+                                           rowsPerPageOptions={[5,10,15]} >
                                     {dynamicColumns}
                                 </DataTable>
                             </div>

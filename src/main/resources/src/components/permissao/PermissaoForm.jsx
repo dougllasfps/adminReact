@@ -19,7 +19,7 @@ class PermissaoForm extends React.Component{
         let pageTitle = pageMode === update_mode ? 'Atualização de Permissão' : 'Cadastro de Permissão';
 
         return (
-            <DefaultForm handleCancel={() => this.props.cancel()} pageTitle={pageTitle} submitLabel={submitLabel} handleSubmit={this.props.handleSubmit}>
+            <DefaultForm handleCancel={this.props.cancel} pageTitle={pageTitle} submitLabel={submitLabel} handleSubmit={this.props.handleSubmit}>
                 <div className="p-md-6">
                     <span className="p-float-label">
                         <Field id="inputDesc" component="input" name="descricao" className="p-inputtext p-component"/>
@@ -28,7 +28,7 @@ class PermissaoForm extends React.Component{
                 </div>
                 <div className="p-md-6">
                     <span className="p-float-label">
-                        <Field id="inputLabel"  component="input" name="label"  className="p-inputtext p-component"/>
+                        <Field id="inputLabel"  component="input" name="label" className="p-inputtext p-component"/>
                         <label htmlFor="inputLabel">Label</label>
                     </span>
                 </div>

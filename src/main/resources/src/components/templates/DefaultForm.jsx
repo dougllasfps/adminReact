@@ -23,7 +23,7 @@ export default class DefaultForm extends React.Component{
                                     </Field>
                                 </div>
                                 <div className="p-md-2">
-                                    <Button label="Cancelar" className="p-button-danger" onClick={() => this.props.handleCancel} />
+                                    <Button label="Cancelar" className="p-button-danger" onClick={this.props.handleCancel} />
                                 </div>
                             </div>
                         </div>
