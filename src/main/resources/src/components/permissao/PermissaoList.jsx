@@ -101,23 +101,15 @@ class PermissaoList extends React.Component{
                                         <div className="p-grid">
 
                                             <div className="p-md-6">
-                                                <span className="p-float-label">
-                                                    <InputText id="inputDesc" name="descricao" onChange={this.handleInputChange.bind(this)} />
-                                                    <label htmlFor="inputDesc">Descrição</label>
-                                                </span>
+                                                <InputText id="inputDesc" placeholder="Descrição" name="descricao" onChange={this.handleInputChange.bind(this)} />
                                             </div>
 
                                             <div className="p-md-6">
-                                                <span className="p-float-label">
-                                                    <InputText id="inputLabel" name="label" onChange={this.handleInputChange.bind(this)} />
-                                                    <label htmlFor="inputLabel">Label</label>
-                                                </span>
+                                                <InputText id="inputLabel" placeholder="Label" name="label" onChange={this.handleInputChange.bind(this)} />
                                             </div>
 
                                             <div className="p-md-2">
-                                                <span className="p-float-label">
-                                                    <Button label="Pesquisar" icon="pi pi-search" className="p-button-secondary" onClick={() => this.props.find({descricao,label})} />
-                                                </span>
+                                                <Button label="Pesquisar" icon="pi pi-search" className="p-button-secondary" onClick={() => this.props.find({descricao,label})} />
                                             </div>
 
                                         </div>
