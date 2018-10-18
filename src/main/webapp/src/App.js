@@ -27,9 +27,12 @@ import 'primereact/resources/themes/nova-light/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
 import 'primeflex/primeflex.css';
+
 import 'fullcalendar/dist/fullcalendar.css';
+import './layout/layout.scss';
 import './layout/layout.css';
 import './App.css';
+
 import 'toastr/build/toastr.min'
 import 'toastr/build/toastr.css'
 import './scripts'
