@@ -28,5 +28,6 @@ idea/*
 /nbdist/
 /.nb-gradle/
 
-src/main/resources/node_modules
-src/main/resources/npm-debug.log
+src/main/webapp/npm-debug.log
+src/main/webapp/build
+src/main/webapp/node_modules
