@@ -83,6 +83,10 @@
                 <directory>src/main/webapp/build</directory>
                 <filtering>true</filtering>
                 <targetPath>/public</targetPath>
+                <excludes>
+                    <exclude>**/static/*.js.map</exclude>
+                    <exclude>**/static/*.ccs.map</exclude>
+                </excludes>
             </resource>
 
             <resource>
