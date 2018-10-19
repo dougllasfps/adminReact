@@ -1,11 +1,13 @@
 package org.dougllasfps.application.model.controleacesso;
 
+import org.dougllasfps.application.model.BaseEntity;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
 @Table(name = "modulo", schema = "controle_acesso")
-public class Modulo implements Serializable {
+public class Modulo implements Serializable, BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,19 +21,10 @@ public class Modulo implements Serializable {
     private String label;
 
     public Modulo() {
-        this((Long) null, (String) null);
     }
 
-    public Modulo(Long id) {
-        this(id, (String) null);
-    }
-
-    public Modulo(String label) {
-        this((Long) null, label);
-    }
-
-    public Modulo(Long id, String label) {
-        this.id = id;
+    public Modulo(String descricao, String label) {
+        this.descricao = descricao;
         this.label = label;
     }
 

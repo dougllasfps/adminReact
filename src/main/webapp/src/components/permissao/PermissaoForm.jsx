@@ -25,16 +25,12 @@ class PermissaoForm extends React.Component{
                 submitLabel={submitLabel} >
 
                 <div className="p-md-6">
-                    <span className="p-float-label">
-                        <Field id="inputDesc" component="input" name="descricao" className="p-inputtext p-component"/>
-                        <label htmlFor="inputDesc">Descrição</label>
-                    </span>
+                    <label htmlFor="inputDesc">Descrição: *</label>
+                    <Field id="inputDesc" component="input" name="descricao" className="p-inputtext p-component"/>
                 </div>
                 <div className="p-md-6">
-                    <span className="p-float-label">
-                        <Field id="inputLabel"  component="input" name="label" className="p-inputtext p-component"/>
-                        <label htmlFor="inputLabel">Label</label>
-                    </span>
+                    <label htmlFor="inputLabel">Label: *</label>
+                    <Field id="inputLabel"  component="input" name="label" className="p-inputtext p-component"/>
                 </div>
 
             </DefaultFormPage>

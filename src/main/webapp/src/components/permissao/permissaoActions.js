@@ -4,7 +4,7 @@ import {showSuccessMessage, showErrorMessage, showWarnMessage} from '../messages
 import {update_mode, insert_mode, search_mode} from '../../main/constants/constants'
 import {initialize} from 'redux-form'
 
-const BASE_URL = 'http://localhost:8080/api/permissoes'
+const BASE_URL = `${process.env.REACT_APP_BASE_SERVICE_URL}/api/permissoes`
 
 export const NEW_ENTITY = {descricao:'', label: ''}
 
@@ -26,6 +26,7 @@ export function find(permissao){
 export function submit(permissao){
     let id = permissao.id ? permissao.id : '';
     let method = id ? 'put' : 'post'
+
     return dispatch => {
         axios[method](`${BASE_URL}/${id}`,permissao )
             .then( resp =>{
