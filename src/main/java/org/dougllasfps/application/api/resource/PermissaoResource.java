@@ -6,12 +6,10 @@ import org.dougllasfps.application.model.controleacesso.Permissao;
 import org.dougllasfps.application.service.PermissaoService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/permissoes")
@@ -26,5 +24,16 @@ public class PermissaoResource extends CrudResource<Permissao, PermissaoService>
         }
 
         return ResponseEntity.ok(ResponseData.of(result));
+    }
+
+    @GetMapping("/{id}/modulos")
+    public ResponseEntity findModulos(@PathVariable("id") Long id){
+        Optional<Permissao> entity = getService().find(id);
+
+        if(!entity.isPresent()){
+            return ResponseEntity.badRequest().body(ResponseData.ofError("Entidade não encontrada para o id passado."));
+        }
+
+        return ResponseEntity.ok(ResponseData.of(getService().obterModulos(entity.get())));
     }
 }

@@ -7,9 +7,9 @@ import {bindActionCreators} from 'redux'
 
 import DefaultListPage from '../templates/DefaultListPage'
 
-import { getList, prepareEditar, remove, prepareInsert, find } from './permissaoActions'
+import { getList, prepareEditar, remove, prepareInsert, find } from './moduloActions'
 
-class PermissaoList extends React.Component{
+class ModuloList extends React.Component{
 
     constructor(props){
         super(props)
@@ -36,7 +36,7 @@ class PermissaoList extends React.Component{
     }
 
     render(){
-        let permissoes = this.props.permissoes || [];
+        let list = this.props.list || [];
 
         let cols = [
             {field: 'descricao', header: 'Descrição'},
@@ -50,12 +50,12 @@ class PermissaoList extends React.Component{
         return (
 
             <DefaultListPage
-                         pageTitle="Permissões"
+                         pageTitle="Módulos"
                          prepareInsert={this.props.prepareInsert}
                          prepareEditar={this.props.prepareEditar}
                          findAction={() => this.props.find(filtro)}
                          remove={this.props.remove}
-                         list={permissoes}
+                         list={list}
                          columns={cols} >
 
                 <div className="p-grid">
@@ -74,7 +74,7 @@ class PermissaoList extends React.Component{
     }
 }
 
-const mapStateToProps = state => ({ permissoes: state.permissoes.permissoesList})
+const mapStateToProps = state => ({ list: state.modulos.list})
 const mapDispatchToProps = dispatch => bindActionCreators({getList, prepareEditar, remove, prepareInsert, find}, dispatch)
 
-export default connect(mapStateToProps, mapDispatchToProps) (PermissaoList)
+export default connect(mapStateToProps, mapDispatchToProps) (ModuloList)

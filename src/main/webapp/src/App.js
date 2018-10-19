@@ -1,27 +1,14 @@
 import React, {Component} from 'react';
 
-import Permissao from './components/permissao/Permissao'
-
 import classNames from 'classnames';
 import {AppTopbar} from './AppTopbar';
 import {AppFooter} from './AppFooter';
 import {AppMenu} from './AppMenu';
 import {AppInlineProfile} from './AppInlineProfile';
-import {Route} from 'react-router-dom';
-import {Dashboard} from './components/Dashboard';
-import {FormsDemo} from './components/FormsDemo';
-import {SampleDemo} from './components/SampleDemo';
-import {DataDemo} from './components/DataDemo';
-import {PanelsDemo} from './components/PanelsDemo';
-import {OverlaysDemo} from './components/OverlaysDemo';
-import {MenusDemo} from './components/MenusDemo';
-import {MessagesDemo} from './components/MessagesDemo';
-import {ChartsDemo} from './components/ChartsDemo';
-import {MiscDemo} from './components/MiscDemo';
-import {EmptyPage} from './components/EmptyPage';
 import {Documentation} from "./components/Documentation";
 import {ScrollPanel} from 'primereact/components/scrollpanel/ScrollPanel';
-import PainelAdmin from './components/paineladmin/PainelAdmin'
+
+import Rotas from './main/Rotas'
 
 import 'primereact/resources/themes/nova-light/theme.css';
 import 'primereact/resources/primereact.min.css';
@@ -110,7 +97,7 @@ class App extends Component {
     createMenu() {
         this.menu = [
             {label: 'Permissões', icon: 'pi pi-fw pi-home', command: () => {window.location = '#/permissoes'}},
-            {label: 'Administração', icon: 'pi pi-fw pi-home', command: () => {window.location = '#/painelAdmin'}},
+            {label: 'Modulos', icon: 'pi pi-fw pi-home', command: () => {window.location = '#/modulos'}},
             {
                 label: 'Menu Modes', icon: 'pi pi-fw pi-cog',
                 items: [
@@ -249,23 +236,7 @@ class App extends Component {
                     </ScrollPanel>
                 </div>
 
-                <div className="layout-main">
-                    <Route path="/" exact component={Dashboard} />
-                    <Route path="/painelAdmin" exact component={PainelAdmin} />
-                    <Route path="/permissoes" exact component={Permissao} />
-                    <Route path="/forms" component={FormsDemo} />
-                    <Route path="/sample" component={SampleDemo} />
-                    <Route path="/data" component={DataDemo} />
-                    <Route path="/panels" component={PanelsDemo} />
-                    <Route path="/overlays" component={OverlaysDemo} />
-                    <Route path="/menus" component={MenusDemo} />
-                    <Route path="/messages" component={MessagesDemo} />
-                    <Route path="/charts" component={ChartsDemo} />
-                    <Route path="/misc" component={MiscDemo} />
-                    <Route path="/empty" component={EmptyPage} />
-                    <Route path="/documentation" component={Documentation} />
-                </div>
-
+                <Rotas />
                 <AppFooter />
 
                 <div className="layout-mask"></div>

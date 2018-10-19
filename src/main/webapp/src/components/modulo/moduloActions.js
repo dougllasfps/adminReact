@@ -13,21 +13,21 @@ import { showSuccessMessage, showErrorMessage } from '../messages/messages'
 import {update_mode, insert_mode, search_mode} from '../../main/constants/constants'
 import {initialize} from 'redux-form'
 
-const BASE_URL = `${process.env.REACT_APP_BASE_SERVICE_URL}/api/permissoes`
+const BASE_URL = `${process.env.REACT_APP_BASE_SERVICE_URL}/api/modulos`
 
 export const NEW_ENTITY = {descricao:'', label: ''}
 
-export function find( permissao ){
-    let query = `descricao=${permissao.descricao}&label=${permissao.label}`;
-    return genericFind( BASE_URL, query, 'PERMISSAO_FIND')
+export function find( MODULO ){
+    let query = `descricao=${MODULO.descricao}&label=${MODULO.label}`;
+    return genericFind( BASE_URL, query, 'MODULO_FIND')
 }
 
-export function submit(permissao){
-    return genericSubmit(BASE_URL,permissao, pageMode(search_mode) )
+export function submit(MODULO){
+    return genericSubmit(BASE_URL,MODULO, pageMode(search_mode) )
 }
 
 export function getList(){
-    return genericGetList(BASE_URL, 'PERMISSAO_ALL')
+    return genericGetList(BASE_URL, 'MODULO_ALL')
 }
 
 export function remove(id){
@@ -53,33 +53,24 @@ export function prepareInsert(){
     ]
 }
 
-export function prepareEditar(permissao){
-    // let id = permissao.id;
-    // let modulos = axios.get(`${BASE_URL}/${id}/modulos`);
-    //
-    // console.log(modulos)
-    //
-    // permissao = {...permissao, modulos: modulos}
-    //
-    // console.log(permissao)
-
+export function prepareEditar(MODULO){
     return [
-        toForm(permissao),
+        toForm(MODULO),
         pageMode(update_mode)
     ]
 }
 
 function pageMode(mode){
     return {
-        type: 'PAGE_MODE_CHANGED',
+        type: 'MODULO_PAGE_MODE_CHANGED',
         payload: mode
     }
 }
 
-function toForm(permissao){
-    return [initialize('permissoesForm', permissao),{
-        type: 'PERMISSAO_FORM',
-        payload: permissao
+function toForm(MODULO){
+    return [initialize('modulosForm', MODULO),{
+        type: 'MODULO_FORM',
+        payload: MODULO
     }]
 }
 

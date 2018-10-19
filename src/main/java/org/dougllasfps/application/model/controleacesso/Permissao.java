@@ -4,6 +4,7 @@ import org.dougllasfps.application.model.BaseEntity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import java.util.List;
 
 //import org.springframework.security.core.GrantedAuthority;
 
@@ -26,6 +27,9 @@ public class Permissao implements BaseEntity {
     @NotEmpty(message = "{campo.label.obrigatorio}")
     @Column(name = "label")
     private String label;
+
+    @OneToMany(mappedBy = "permissao")
+    private List<ModuloPermissao> modulos;
 
     public Permissao(String descricao, String label) {
         this.descricao = descricao;
@@ -62,4 +66,11 @@ public class Permissao implements BaseEntity {
         return "Permissão [id=" + this.id + ", descricao=" + this.descricao + "]";
     }
 
+    public List<ModuloPermissao> getModulos() {
+        return modulos;
+    }
+
+    public void setModulos(List<ModuloPermissao> modulos) {
+        this.modulos = modulos;
+    }
 }

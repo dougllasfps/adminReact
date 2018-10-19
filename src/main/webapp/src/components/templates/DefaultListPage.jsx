@@ -84,7 +84,7 @@ export default class DefaultList extends React.Component{
             <div className="p-grid p-fluid">
                 <div className="p-col-12 p-lg-12">
                     <div className="card card-w-title">
-                        <h1>Permissões</h1>
+                        <h1>{this.props.pageTitle}</h1>
                         <div className="p-grid">
                             <div className="p-md-10" />
                             <div className="p-md-2">
