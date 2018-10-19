@@ -2,6 +2,7 @@ package org.dougllasfps.application.api.resource;
 
 
 import org.dougllasfps.application.api.ResponseData;
+import org.dougllasfps.application.model.controleacesso.ModuloPermissao;
 import org.dougllasfps.application.model.controleacesso.Permissao;
 import org.dougllasfps.application.service.PermissaoService;
 import org.springframework.http.HttpStatus;
@@ -35,5 +36,18 @@ public class PermissaoResource extends CrudResource<Permissao, PermissaoService>
         }
 
         return ResponseEntity.ok(ResponseData.of(getService().obterModulos(entity.get())));
+    }
+
+    @GetMapping("/{id}/alldata")
+    public ResponseEntity loadEntityForm(@PathVariable("id") Long id){
+        Optional<Permissao> entity = getService().find(id);
+
+        if(!entity.isPresent()){
+            return ResponseEntity.badRequest().body(ResponseData.ofError("Entidade não encontrada para o id passado."));
+        }
+
+        List<ModuloPermissao> modulos = getService().obterModulos(entity.get());
+        entity.get().setModulos(modulos);
+        return ResponseEntity.ok(ResponseData.of(entity.get()));
     }
 }
