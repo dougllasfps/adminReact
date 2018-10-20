@@ -1,6 +1,7 @@
 import React from 'react'
 import {Field, reduxForm} from 'redux-form'
-import {Dropdown} from 'primereact/dropdown';
+import {DataTable} from 'primereact/datatable';
+import {Column} from 'primereact/column';
 
 
 import DefaultFormPage from '../../components/templates/DefaultFormPage'
@@ -15,7 +16,7 @@ import {update_mode, insert_mode} from '../../main/constants/constants'
 
 class PermissaoForm extends React.Component{
 
-    componentWillMount(){
+    UNSAFE_componentWillMount(){
         this.props.listaModulos();
         console.log('modulos listados')
     }
@@ -26,7 +27,7 @@ class PermissaoForm extends React.Component{
         console.log(modulos)
 
         const moduloOptions = modulos.forEach( m => {
-            return {name : m.descricao, code: m}
+            return {key: m.id, value: m, label: m.descricao}
         })
 
         let submitLabel = pageMode === update_mode ? 'Atualizar' : 'Salvar';
@@ -38,18 +39,15 @@ class PermissaoForm extends React.Component{
                 handleCancel={this.props.cancel}
                 pageTitle={pageTitle}
                 submitLabel={submitLabel} >
-
-                <div className="p-md-6">
-                    <label htmlFor="inputDesc">Descrição: *</label>
-                    <Field id="inputDesc" component="input" name="descricao" className="p-inputtext p-component"/>
-                </div>
-                <div className="p-md-6">
-                    <label htmlFor="inputLabel">Label: *</label>
-                    <Field id="inputLabel"  component="input" name="label" className="p-inputtext p-component"/>
-                </div>
-                <div className="p-md-6">
-                    <label htmlFor="inputModulo">Modulo: *</label>
-                    <Field id="inputLabel"  component={Dropdown} options={moduloOptions} name="modulo" className="p-inputtext p-component"/>
+                <div className="p-grid">
+                    <div className="p-md-6">
+                        <label htmlFor="inputDesc">Descrição: *</label>
+                        <Field id="inputDesc" component="input" name="descricao" className="p-inputtext p-component"/>
+                    </div>
+                    <div className="p-md-6">
+                        <label htmlFor="inputLabel">Label: *</label>
+                        <Field id="inputLabel"  component="input" name="label" className="p-inputtext p-component"/>
+                    </div>
                 </div>
 
             </DefaultFormPage>

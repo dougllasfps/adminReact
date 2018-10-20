@@ -5,14 +5,12 @@ export default function(state = INITIAL_STATE, action) {
     switch (action.type) {
         case 'PERMISSAO_FIND':
             if(action.payload) {
-                return {...state, permissoesList: action.payload}
+                return {...state, list: action.payload}
             }else{
-                return {...state, permissoesList: []}
+                return {...state, list: []}
             }
         case 'PERMISSAO_ALL':
-            return {...state, permissoesList: action.payload}
-        case 'PERMISSAO_FORM':
-            return {...state, permissaoEntity: action.payload}
+            return {...state, list: action.payload}
         case 'PAGE_MODE_CHANGED':
             return {...state, pageMode: action.payload}
         default:

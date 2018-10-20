@@ -74,7 +74,7 @@ class PermissaoList extends React.Component{
     }
 }
 
-const mapStateToProps = state => ({ permissoes: state.permissoes.permissoesList})
+const mapStateToProps = state => ({ permissoes: state.permissoes.list})
 const mapDispatchToProps = dispatch => bindActionCreators({getList, prepareEditar, remove, prepareInsert, find}, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps) (PermissaoList)

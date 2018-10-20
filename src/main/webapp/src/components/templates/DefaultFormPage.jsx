@@ -13,9 +13,7 @@ export default class DefaultFormPage extends React.Component{
                         <div className="card card-w-title">
                             <h1>{this.props.pageTitle}</h1>
                             <br />
-                            <div className="p-grid">
                                 {this.props.children}
-                            </div>
                             <div className="p-grid">
                                 <div className="p-md-2">
                                     <Field type="submit" component="button" name="submitButton" className="p-button p-component p-button-secondary p-button-text-only" >
