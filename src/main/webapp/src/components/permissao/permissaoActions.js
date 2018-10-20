@@ -63,10 +63,22 @@ export function prepareEditar(permissao){
     //
     // console.log(permissao)
 
-    return [
-        toForm(permissao),
-        pageMode(update_mode)
-    ]
+
+    return dispatch => {
+        axios.get(`${BASE_URL}/${permissao.id}/alldata`)
+            .then( resp => {
+                let entity = resp.data.data
+                dispatch( [
+                    toForm(entity),
+                    pageMode(update_mode)
+                ])
+            }).catch( e => {
+                e.response.data.errors.forEach(error => {
+                        showErrorMessage(error)
+                    }
+                );
+            })
+    }
 }
 
 function pageMode(mode){

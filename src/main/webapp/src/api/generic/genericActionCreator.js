@@ -4,18 +4,33 @@ import {showSuccessMessage, showErrorMessage, showWarnMessage} from '../../compo
 export function find(requestMapping, query, actionCreator){
 
     let url = `${requestMapping}/find?${query}`;
-    let request = axios.get(url)
-        .catch(error => {
-            error.response.data.warnings.forEach( w =>{
-                showWarnMessage(w)
+    return dispatch => {
+        axios.get(url)
+            .then(resp => {
+                dispatch({
+                    type: actionCreator,
+                    payload: resp.data.data
+                })
             })
-        })
+            .catch(error => {
+                let warnings = error.response.data.warnings;
 
-    return {
-        type: actionCreator,
-        payload: request
+                if(warnings){
+                    warnings.forEach(w => {
+                        showWarnMessage(w)
+                    });
+                }
+
+                let errors = error.response.data.errors;
+
+                if(errors){
+                    errors.forEach(e => {
+                        showErrorMessage(e)
+                    })
+                }
+
+            })
     }
-
 }
 
 export function submit( requestMapping, entity , dispatchAction ){
@@ -40,11 +55,34 @@ export function submit( requestMapping, entity , dispatchAction ){
 }
 
 export function getList(requestMapping, actionCreator){
-    let request = axios.get(requestMapping)
-    return {
-        type: actionCreator,
-        payload: request
+    return dispatch => {
+        axios.get(requestMapping)
+            .then(resp => {
+                dispatch({
+                    type: actionCreator,
+                    payload: resp.data.data
+                })
+            })
+            .catch(error => {
+                let warnings = error.response.data.warnings;
+
+                if(warnings){
+                    warnings.forEach(w => {
+                        showWarnMessage(w)
+                    });
+                }
+
+                let errors = error.response.data.errors;
+
+                if(errors){
+                    errors.forEach(e => {
+                        showErrorMessage(e)
+                    })
+                }
+
+            })
     }
+
 }
 
 export function remove( requestMapping, id, dispatchAction ){
