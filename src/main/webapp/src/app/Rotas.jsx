@@ -1,8 +1,8 @@
 import React from 'react'
 import {Route} from 'react-router-dom';
 
-import Permissao from '../components/permissao/Permissao'
-import Modulo from '../components/modulo/Modulo'
+import Permissao from './components/permissao/Permissao'
+import Modulo from './components/modulo/Modulo'
 
 
 export default props => (

@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux'
 
-import permissaoReducer from '../components/permissao/permissaoReducer'
-import moduloReducer from '../components/modulo/moduloReducer'
+import permissaoReducer from './components/permissao/permissaoReducer'
+import moduloReducer from './components/modulo/moduloReducer'
 import {reducer as formReducer} from 'redux-form'
 
 

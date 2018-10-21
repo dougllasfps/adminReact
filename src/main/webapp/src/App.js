@@ -8,7 +8,7 @@ import {AppInlineProfile} from './AppInlineProfile';
 import {Documentation} from "./components/Documentation";
 import {ScrollPanel} from 'primereact/components/scrollpanel/ScrollPanel';
 
-import Rotas from './main/Rotas'
+import Rotas from './app/Rotas'
 
 import 'primereact/resources/themes/nova-light/theme.css';
 import 'primereact/resources/primereact.min.css';

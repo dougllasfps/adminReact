@@ -1,21 +1,19 @@
 import React from 'react'
 import {Field, reduxForm} from 'redux-form'
 
-import DefaultFormPage from '../../components/templates/DefaultFormPage'
+import DefaultFormPage from '../../templates/DefaultFormPage'
 
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import {cancel} from './moduloActions'
 
-import {update_mode, insert_mode} from '../../main/constants/constants'
-
 
 class ModuloForm extends React.Component{
 
     render(){
-        let pageMode = this.props.pageMode || insert_mode;
-        let submitLabel = pageMode === update_mode ? 'Atualizar' : 'Salvar';
-        let pageTitle = pageMode === update_mode ? 'Atualização de Modulo' : 'Cadastro de Modulo';
+        let pageMode = this.props.pageMode || 'insert_mode';
+        let submitLabel = pageMode === 'update_mode' ? 'Atualizar' : 'Salvar';
+        let pageTitle = pageMode === 'update_mode' ? 'Atualização de Modulo' : 'Cadastro de Modulo';
 
         return (
             <DefaultFormPage

@@ -7,23 +7,34 @@ import
 } from '../../api/generic/genericActionCreator'
 
 import axios from 'axios'
+import Api from '../../api/generic/Api'
 
-import { showSuccessMessage, showErrorMessage } from '../messages/messages'
+import { showSuccessMessage, showErrorMessage } from '../../../components/messages/messages'
 
-import {update_mode, insert_mode, search_mode} from '../../main/constants/constants'
 import {initialize} from 'redux-form'
 
 const BASE_URL = `${process.env.REACT_APP_BASE_SERVICE_URL}/api/modulos`
 
 export const NEW_ENTITY = {descricao:'', label: ''}
 
+const api = new Api()
+
 export function find( MODULO ){
     let query = `descricao=${MODULO.descricao}&label=${MODULO.label}`;
     return genericFind( BASE_URL, query, 'MODULO_FIND')
+
+    const onSuccess = (resp, dispatch) =>{
+        return dispatch({
+            type : 'MODULO_FIND',
+            payload: resp.data.data
+        })
+    }
+
+    return api.get( query, onSuccess)
 }
 
 export function submit(MODULO){
-    return genericSubmit(BASE_URL,MODULO, pageMode(search_mode) )
+    return genericSubmit(BASE_URL,MODULO, pageMode('search_mode') )
 }
 
 export function getList(){
@@ -49,14 +60,15 @@ export function remove(id){
 export function prepareInsert(){
     return [
         toForm(NEW_ENTITY),
-        pageMode(insert_mode)
+        pageMode(
+            'insert_mode')
     ]
 }
 
 export function prepareEditar(MODULO){
     return [
         toForm(MODULO),
-        pageMode(update_mode)
+        pageMode('update_mode')
     ]
 }
 
@@ -75,6 +87,6 @@ function toForm(MODULO){
 }
 
 export function cancel(){
-    return pageMode(search_mode)
+    return pageMode('search_mode')
 }
 

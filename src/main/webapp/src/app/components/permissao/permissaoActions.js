@@ -1,3 +1,5 @@
+import axios from 'axios'
+import { showSuccessMessage, showErrorMessage } from '../../../components/messages/messages'
 import
 {
     find as genericFind,
@@ -5,13 +7,6 @@ import
     getList as genericGetList
 
 } from '../../api/generic/genericActionCreator'
-
-import axios from 'axios'
-
-import { showSuccessMessage, showErrorMessage } from '../messages/messages'
-
-import {update_mode, insert_mode, search_mode} from '../../main/constants/constants'
-import {initialize} from 'redux-form'
 
 const BASE_URL = `${process.env.REACT_APP_BASE_SERVICE_URL}/api/permissoes`
 
@@ -23,7 +18,8 @@ export function find( permissao ){
 }
 
 export function submit(permissao){
-    return genericSubmit(BASE_URL,permissao, pageMode(search_mode) )
+    console.log('submiting', permissao)
+    return genericSubmit(BASE_URL,permissao )
 }
 
 export function getList(){
@@ -48,8 +44,7 @@ export function remove(id){
 
 export function prepareInsert(){
     return [
-        toForm(NEW_ENTITY),
-        pageMode(insert_mode)
+        toForm(NEW_ENTITY)
     ]
 }
 
@@ -70,7 +65,6 @@ export function prepareEditar(permissao){
                 let entity = resp.data.data
                 dispatch( [
                     toForm(entity),
-                    pageMode(update_mode)
                 ])
             }).catch( e => {
                 e.response.data.errors.forEach(error => {
@@ -81,21 +75,13 @@ export function prepareEditar(permissao){
     }
 }
 
-function pageMode(mode){
+function toForm(permissao){
     return {
-        type: 'PAGE_MODE_CHANGED',
-        payload: mode
+        type: 'PERMISSAO_FORM',
+        payload: permissao
     }
 }
 
-function toForm(permissao){
-    return [initialize('permissoesForm', permissao),{
-        type: 'PERMISSAO_FORM',
-        payload: permissao
-    }]
-}
-
 export function cancel(){
-    return pageMode(search_mode)
-}
 
+}

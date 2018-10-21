@@ -13,7 +13,7 @@ import promisse from 'redux-promise'
 import thunk from 'redux-thunk'
 import multi from 'redux-multi'
 
-import reducers from './main/reducers'
+import reducers from './app/reducers'
 
 const devTools = window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 

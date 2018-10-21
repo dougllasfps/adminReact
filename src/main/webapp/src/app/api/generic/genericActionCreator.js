@@ -1,5 +1,5 @@
 import axios from 'axios'
-import {showSuccessMessage, showErrorMessage, showWarnMessage} from '../../components/messages/messages'
+import {showSuccessMessage, showErrorMessage, showWarnMessage} from '../../../components/messages/messages'
 
 export function find(requestMapping, query, actionCreator){
 
