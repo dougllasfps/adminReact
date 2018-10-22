@@ -8,7 +8,7 @@ import {bindActionCreators} from 'redux'
 import DefaultListPage from '../../templates/DefaultListPage'
 import ComponentUtils, {handleChange} from '../../../components/util/ComponentUtils'
 
-import { getList } from './permissaoActions'
+import { getList,remove,prepareEditar,prepareInsert } from './permissaoActions'
 
 
 class PermissaoList extends React.Component{
@@ -64,5 +64,5 @@ const mapStateToProps = state => ({
     permissoes: state.permissoes.list
 })
 
-const mapDispatchToProps = dispatch => bindActionCreators({getList}, dispatch)
+const mapDispatchToProps = dispatch => bindActionCreators({getList,prepareInsert,prepareEditar,remove}, dispatch)
 export default connect(mapStateToProps, mapDispatchToProps) (PermissaoList)

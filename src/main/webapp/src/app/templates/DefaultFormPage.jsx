@@ -1,11 +1,16 @@
 import React from 'react'
 import {Button} from "primereact/button";
+import { Form } from 'react-final-form'
 
 export default class DefaultFormPage extends React.Component{
 
     render(){
-        return(
-            <form>
+
+        const initialValues = this.props.entity;
+
+        const form = ({ handleSubmit, pristine, invalid }) => (
+
+            <form onSubmit={handleSubmit}>
                 <input type="hidden" name="id" />
                 <div className="p-grid p-fluid">
                     <div className="p-col-12 p-lg-12">
@@ -15,7 +20,7 @@ export default class DefaultFormPage extends React.Component{
                                 {this.props.children}
                             <div className="p-grid">
                                 <div className="p-md-2">
-                                    <button type="submit" name="submitButton" onClick={this.props.handleSubmit} className="p-button p-component p-button-secondary p-button-text-only" >
+                                    <button type="submit" name="submitButton" className="p-button p-component p-button-secondary p-button-text-only" >
                                         <span className="p-button-text p-c">{this.props.submitLabel}</span>
                                     </button>
                                 </div>
@@ -27,6 +32,11 @@ export default class DefaultFormPage extends React.Component{
                     </div>
                 </div>
             </form>
+
+        )
+
+        return(
+            <Form initialValues={initialValues} onSubmit={this.props.handleSubmit} render={form} />
         )
 
     }

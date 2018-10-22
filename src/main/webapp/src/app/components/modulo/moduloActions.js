@@ -6,39 +6,22 @@ import
 
 } from '../../api/generic/genericActionCreator'
 
+import {MODULO_FORM, MODULO_ALL,MODULO_FIND,MODULO_PAGE_MODE_CHANGED,BASE_URL,NEW_ENTITY} from './ModuloService'
 import axios from 'axios'
-import Api from '../../api/generic/Api'
-
 import { showSuccessMessage, showErrorMessage } from '../../../components/messages/messages'
-
-import {initialize} from 'redux-form'
-
-const BASE_URL = `${process.env.REACT_APP_BASE_SERVICE_URL}/api/modulos`
-
-export const NEW_ENTITY = {descricao:'', label: ''}
-
-const api = new Api()
+import ComponentUtils from '../../../components/util/ComponentUtils'
 
 export function find( MODULO ){
     let query = `descricao=${MODULO.descricao}&label=${MODULO.label}`;
-    return genericFind( BASE_URL, query, 'MODULO_FIND')
-
-    const onSuccess = (resp, dispatch) =>{
-        return dispatch({
-            type : 'MODULO_FIND',
-            payload: resp.data.data
-        })
-    }
-
-    return api.get( query, onSuccess)
+    return genericFind( BASE_URL, query, MODULO_FIND)
 }
 
 export function submit(MODULO){
-    return genericSubmit(BASE_URL,MODULO, pageMode('search_mode') )
+    return genericSubmit(BASE_URL,MODULO, pageMode(ComponentUtils.SEARCH_STATUS) )
 }
 
 export function getList(){
-    return genericGetList(BASE_URL, 'MODULO_ALL')
+    return genericGetList(BASE_URL, MODULO_ALL)
 }
 
 export function remove(id){
@@ -49,7 +32,7 @@ export function remove(id){
                 showSuccessMessage('Registro removido com sucesso.')
                 dispatch(getList())
             }).catch(e => {
-            e.response.data.errors.forEach(error => {
+                e.response.data.errors.forEach(error => {
                     showErrorMessage(error)
                 }
             );
@@ -60,33 +43,32 @@ export function remove(id){
 export function prepareInsert(){
     return [
         toForm(NEW_ENTITY),
-        pageMode(
-            'insert_mode')
+        pageMode(ComponentUtils.INSERT_STATUS)
     ]
 }
 
-export function prepareEditar(MODULO){
+export function prepareEditar(entity){
     return [
-        toForm(MODULO),
-        pageMode('update_mode')
+        toForm(entity),
+        pageMode(ComponentUtils.UPDATE_STATUS)
     ]
 }
 
 function pageMode(mode){
     return {
-        type: 'MODULO_PAGE_MODE_CHANGED',
+        type: MODULO_PAGE_MODE_CHANGED,
         payload: mode
     }
 }
 
-function toForm(MODULO){
-    return [initialize('modulosForm', MODULO),{
-        type: 'MODULO_FORM',
-        payload: MODULO
-    }]
+function toForm(entity){
+    return {
+        type: MODULO_FORM,
+        payload: entity
+    }
 }
 
 export function cancel(){
-    return pageMode('search_mode')
+    return pageMode(ComponentUtils.SEARCH_STATUS)
 }
 

@@ -2,6 +2,7 @@ import React from 'react'
 
 import ModuloList from './ModuloList'
 import ModuloForm from './ModuloForm'
+import ComponentUtils from '../../../components/util/ComponentUtils'
 
 
 import {connect} from 'react-redux'
@@ -12,20 +13,24 @@ import {submit} from './moduloActions'
 class Modulo extends React.Component{
 
     render(){
-        let pageMode = this.props.pageMode || 'search_mode';
-        return (
-            <div>
-                {pageMode === 'search_mode' ? <ModuloList /> : <ModuloForm onSubmit={this.props.submit} />}
-            </div>
-        )
+        let pageStatus = this.props.pageStatus ? this.props.pageStatus : ComponentUtils.SEARCH_STATUS;       
+        let renderList = pageStatus === ComponentUtils.SEARCH_STATUS
+
+        if(renderList){
+            return (
+                <ModuloList />
+            )
+        }else{
+            return (
+                <ModuloForm onSubmit={this.props.submit} />
+            )
+        }
     }
 }
 
-const mapStateToProps = state => ({
-    pageMode: state.modulos.pageMode
-})
-
-const mapDispatchToProps = dispatch => bindActionCreators ( {submit}, dispatch)
-
-
-export default connect(mapStateToProps,mapDispatchToProps) (Modulo)
+export default connect(
+    state => ({
+        pageStatus: state.modulos.pageStatus
+    }),
+    dispatch => bindActionCreators ( {submit}, dispatch )
+) (Modulo)

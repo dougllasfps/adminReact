@@ -28,6 +28,11 @@ export function find(requestMapping, query, actionCreator){
                         showErrorMessage(e)
                     })
                 }
+                
+                dispatch({
+                    type: actionCreator,
+                    payload: []
+                })
 
             })
     }
@@ -36,21 +41,24 @@ export function find(requestMapping, query, actionCreator){
 export function submit( requestMapping, entity , dispatchAction ){
     let id = entity.id ? entity.id : '';
     let method = id ? 'put' : 'post'
+    let successMessage = id ? 'Registro atualizado com sucesso.' : 'Registro salvo com sucesso.'
     return dispatch => {
         axios[method](`${requestMapping}/${id}`,entity )
             .then( resp =>{
-                showSuccessMessage('Registro salvo com sucesso.')
+
+                showSuccessMessage(successMessage)
 
                 if(dispatchAction){
                     dispatch(dispatchAction)
                 }
 
             }).catch( e => {
-                e.response.data.errors.forEach(error => {
-                    showErrorMessage(error)
-                }
-            );
-        })
+                if(e.response && e.response.data){
+                    e.response.data.errors.forEach(error => {
+                        showErrorMessage(error)
+                    })
+                }                
+            })
     }
 }
 

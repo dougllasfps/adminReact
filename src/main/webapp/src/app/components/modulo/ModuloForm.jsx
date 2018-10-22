@@ -1,23 +1,31 @@
 import React from 'react'
-import {Field, reduxForm} from 'redux-form'
+import {Field} from 'react-final-form'
 
 import DefaultFormPage from '../../templates/DefaultFormPage'
 
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
-import {cancel} from './moduloActions'
+import {cancel, submit} from './moduloActions'
+
+const NEW_ENTITY = {descricao:'', label: ''}
 
 
 class ModuloForm extends React.Component{
 
+    handleSubmit = (modulo) => {
+        this.props.submit(modulo)
+    }
+
     render(){
-        let pageMode = this.props.pageMode || 'insert_mode';
-        let submitLabel = pageMode === 'update_mode' ? 'Atualizar' : 'Salvar';
-        let pageTitle = pageMode === 'update_mode' ? 'Atualização de Modulo' : 'Cadastro de Modulo';
+        const entity = this.props.entity || NEW_ENTITY
+
+        let submitLabel = entity.id ? 'Atualizar' : 'Salvar';
+        let pageTitle = entity.id ? 'Atualização de Modulo' : 'Cadastro de Modulo';
 
         return (
             <DefaultFormPage
-                handleSubmit={this.props.handleSubmit}
+                entity={entity}
+                handleSubmit={this.handleSubmit}
                 handleCancel={this.props.cancel}
                 pageTitle={pageTitle}
                 submitLabel={submitLabel} >
@@ -37,13 +45,10 @@ class ModuloForm extends React.Component{
     }
 }
 
-const reduxFormConfig = {form: 'modulosForm', destroyOnUnmount: false};
-
-ModuloForm = reduxForm(reduxFormConfig)(ModuloForm);
 
 const mapStateToProps = state => ({
-    pageMode: state.modulos.pageMode
+    entity: state.modulos.entity
 })
 
-const mapDispatchToProps = dispatch => bindActionCreators ( {cancel}, dispatch)
+const mapDispatchToProps = dispatch => bindActionCreators ( {cancel, submit}, dispatch)
 export default connect(mapStateToProps,mapDispatchToProps) (ModuloForm)

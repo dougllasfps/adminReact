@@ -38,11 +38,11 @@ class Permissao extends React.Component{
     }
 
     render(){
-        let pageMode = this.state.pageStatus || ComponentUtils.SEARCH_STATUS;
+        let pageStatus = this.state.pageStatus || ComponentUtils.SEARCH_STATUS;
 
         console.log('render page status ', ComponentUtils.SEARCH_STATUS)
 
-        if( pageMode === ComponentUtils.SEARCH_STATUS ){
+        if( pageStatus === ComponentUtils.SEARCH_STATUS ){
             return (
                 <PermissaoList 
                         find={this.props.find} 
@@ -60,7 +60,7 @@ class Permissao extends React.Component{
 }
 
 const mapStateToProps = state => ({
-    pageMode: state.permissoes.pageMode,
+    pageStatus: state.permissoes.pageStatus,
     permissoes: state.permissoes.list
 })
 const mapDispatchToProps = dispatch => bindActionCreators({getList, prepareEditar, remove, prepareInsert, find, submit}, dispatch)

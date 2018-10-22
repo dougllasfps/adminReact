@@ -49,30 +49,10 @@ export function prepareInsert(){
 }
 
 export function prepareEditar(permissao){
-    // let id = permissao.id;
-    // let modulos = axios.get(`${BASE_URL}/${id}/modulos`);
-    //
-    // console.log(modulos)
-    //
-    // permissao = {...permissao, modulos: modulos}
-    //
-    // console.log(permissao)
-
-
-    return dispatch => {
-        axios.get(`${BASE_URL}/${permissao.id}/alldata`)
-            .then( resp => {
-                let entity = resp.data.data
-                dispatch( [
-                    toForm(entity),
-                ])
-            }).catch( e => {
-                e.response.data.errors.forEach(error => {
-                        showErrorMessage(error)
-                    }
-                );
-            })
-    }
+    return [
+        toForm(entity),
+        pageMode(ComponentUtils.UPDATE_STATUS)
+    ]
 }
 
 function toForm(permissao){
@@ -84,4 +64,11 @@ function toForm(permissao){
 
 export function cancel(){
 
+}
+
+function pageMode(mode){
+    return {
+        type: 'PERMISSAO_PAGE_STATUS',
+        payload: mode
+    }
 }

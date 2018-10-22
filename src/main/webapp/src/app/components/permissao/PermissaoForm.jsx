@@ -7,27 +7,30 @@ import ComponentUtils, {handleChange} from '../../../components/util/ComponentUt
 
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
-import {cancel} from './permissaoActions'
+import {cancel, submit} from './permissaoActions'
 import {getList as listaModulos} from '../modulo/moduloActions'
+
+const NEW_ENTITY = {descricao:'', label: ''}
 
 class PermissaoForm extends React.Component{
 
-    state = {
-        descricao : '',
-        label: ''
+    onSubmit = (permissao) => {
+        this.props.submit(permissao)
     }
     
     render(){
+        const entity = this.props.entity || NEW_ENTITY
 
-        const {descricao,label} = this.state;
-        const entity = {descricao,label}
+        let submitLabel = entity.id ? 'Atualizar' : 'Salvar';
+        let pageTitle = entity.id ? 'Atualização de Modulo' : 'Cadastro de Modulo';
 
         return (
             <DefaultFormPage
-                handleSubmit={(e) => this.props.handleSubmit(e, entity)}
+                entity={entity}
+                handleSubmit={this.onSubmit}
                 handleCancel={this.props.cancel}
-                pageTitle={this.props.pageTitle}
-                submitLabel={this.props.submitLabel} >
+                pageTitle={pageTitle}
+                submitLabel={submitLabel} >
 
                 <div className="p-grid">
                     <div className="p-md-6">
@@ -49,5 +52,5 @@ const mapStateToProps = state => ({
     entity: state.permissoes.entity
 })
 
-const mapDispatchToProps = dispatch => bindActionCreators ( {cancel, listaModulos}, dispatch)
+const mapDispatchToProps = dispatch => bindActionCreators ( {cancel, submit}, dispatch)
 export default connect(mapStateToProps,mapDispatchToProps) (PermissaoForm)
