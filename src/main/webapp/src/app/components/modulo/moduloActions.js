@@ -1,10 +1,4 @@
-import
-{
-    find as genericFind,
-    submit as genericSubmit,
-    getList as genericGetList
-
-} from '../../api/generic/reduxUtil'
+import { find as genericFind, submit as genericSubmit,  getList as genericGetList} from '../../api/generic/reduxUtil'
 
 import {MODULO_FORM, MODULO_ALL,MODULO_FIND,MODULO_PAGE_MODE_CHANGED,BASE_URL,NEW_ENTITY} from './ModuloService'
 import axios from 'axios'
@@ -19,7 +13,7 @@ export function find( MODULO ){
 export function submit(MODULO){
     return genericSubmit(BASE_URL,MODULO, pageMode(ComponentUtils.SEARCH_STATUS) )
 }
-
+    
 export function getList(){
     return genericGetList(BASE_URL, MODULO_ALL)
 }

@@ -2,14 +2,9 @@ import React from 'react'
 
 import ComponentUtils from '../../../components/util/ComponentUtils'
 import PermissaoList from "./PermissaoList";
-import PermissaoService from './PermissaoService'
-
 import PermissaoForm from "./PermissaoForm";
 
 import {connect} from 'react-redux'
-import {bindActionCreators} from 'redux'
-
-import { submit } from './permissaoActions'
 
 class Permissao extends React.Component{
     

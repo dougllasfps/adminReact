@@ -6,9 +6,9 @@ import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 
 import DefaultListPage from '../../templates/DefaultListPage'
-import ComponentUtils, {handleChange} from '../../../components/util/ComponentUtils'
+import {handleChange} from '../../../components/util/ComponentUtils'
 
-import { getList,remove,prepareEditar,prepareInsert } from './permissaoActions'
+import { getList,remove,prepareEditar,prepareInsert,find } from './permissaoActions'
 
 
 class PermissaoList extends React.Component{
@@ -23,7 +23,7 @@ class PermissaoList extends React.Component{
     }
 
     render(){
-        let permissoes = this.props.permissoes || [];
+        let list = this.props.list || [];
 
         let cols = [
             {field: 'descricao', header: 'Descrição'},
@@ -42,16 +42,22 @@ class PermissaoList extends React.Component{
                          prepareEditar={this.props.prepareEditar}
                          findAction={() => this.props.find(filtro)}
                          remove={this.props.remove}
-                         list={permissoes}
+                         list={list}
                          columns={cols} >
 
                 <div className="p-grid">
                     <div className="p-md-6">
-                        <InputText id="inputDesc" placeholder="Descrição" name="descricao" onChange={ (e) => handleChange(e, this) } />
+                        <InputText id="inputDesc" 
+                                   placeholder="Descrição" 
+                                   name="descricao" 
+                                   onChange={ (e) => handleChange(e, this) } />
                     </div>
 
                     <div className="p-md-6">
-                        <InputText id="inputLabel" placeholder="Label" name="label" onChange={ (e) =>  handleChange(e, this) } />
+                        <InputText id="inputLabel" 
+                                   placeholder="Label" 
+                                   name="label" 
+                                   onChange={ (e) =>  handleChange(e, this) } />
                     </div>
                 </div>
 
@@ -64,5 +70,5 @@ const mapStateToProps = state => ({
     permissoes: state.permissoes.list
 })
 
-const mapDispatchToProps = dispatch => bindActionCreators({getList,prepareInsert,prepareEditar,remove}, dispatch)
+const mapDispatchToProps = dispatch => bindActionCreators({getList,prepareInsert,prepareEditar,remove, find}, dispatch)
 export default connect(mapStateToProps, mapDispatchToProps) (PermissaoList)

@@ -1,14 +1,11 @@
 import React from 'react'
-import {DataTable} from 'primereact/datatable';
-import {Column} from 'primereact/column';
 
 import DefaultFormPage from '../../templates/DefaultFormPage'
-import ComponentUtils, {handleChange} from '../../../components/util/ComponentUtils'
+import  {handleChange} from '../../../components/util/ComponentUtils'
 
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import {cancel, submit} from './permissaoActions'
-import {getList as listaModulos} from '../modulo/moduloActions'
 
 const NEW_ENTITY = {descricao:'', label: ''}
 

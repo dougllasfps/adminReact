@@ -4,11 +4,7 @@ import ModuloList from './ModuloList'
 import ModuloForm from './ModuloForm'
 import ComponentUtils from '../../../components/util/ComponentUtils'
 
-
 import {connect} from 'react-redux'
-import {bindActionCreators} from 'redux'
-
-import {submit} from './moduloActions'
 
 class Modulo extends React.Component{
 

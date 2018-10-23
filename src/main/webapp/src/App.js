@@ -5,7 +5,6 @@ import {AppTopbar} from './AppTopbar';
 import {AppFooter} from './AppFooter';
 import {AppMenu} from './AppMenu';
 import {AppInlineProfile} from './AppInlineProfile';
-import {Documentation} from "./components/Documentation";
 import {ScrollPanel} from 'primereact/components/scrollpanel/ScrollPanel';
 
 import Rotas from './app/Rotas'

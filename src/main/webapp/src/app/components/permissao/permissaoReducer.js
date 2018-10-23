@@ -9,6 +9,7 @@ const INITIAL_STATE = {
 export default function(state = INITIAL_STATE, action) {
     switch (action.type) {
         case 'PERMISSAO_FIND':
+        return {...state, list: action.payload}
         case 'PERMISSAO_ALL':
             return {...state, list: action.payload}
         case 'PERMISSAO_FORM':

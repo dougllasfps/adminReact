@@ -6,33 +6,21 @@ import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 
 import DefaultListPage from '../../templates/DefaultListPage'
+import  {handleChange} from '../../../components/util/ComponentUtils'
+
 
 import { getList, prepareEditar, remove, prepareInsert, find } from './moduloActions'
 
 class ModuloList extends React.Component{
 
-    constructor(props){
-        super(props)
-        this.state = {
+        state = {
             descricao: '',
             label: ''
         };
 
-        this.handleInputChange = this.handleInputChange.bind(this);
-    }
 
     componentWillMount(){
         this.props.getList()
-    }
-
-    handleInputChange(event) {
-        const target = event.target;
-        const value = target.type === 'checkbox' ? target.checked : target.value;
-        const name = target.name;
-
-        this.setState({
-            [name]: value
-        });
     }
 
     render(){
@@ -60,11 +48,17 @@ class ModuloList extends React.Component{
 
                 <div className="p-grid">
                     <div className="p-md-6">
-                        <InputText id="inputDesc" placeholder="Descrição" name="descricao" onChange={this.handleInputChange.bind(this)} />
+                        <InputText id="inputDesc" 
+                                   placeholder="Descrição" 
+                                   name="descricao" 
+                                   onChange={ (e) =>  handleChange(e, this) } />
                     </div>
 
                     <div className="p-md-6">
-                        <InputText id="inputLabel" placeholder="Label" name="label" onChange={this.handleInputChange.bind(this)} />
+                        <InputText id="inputLabel" 
+                                   placeholder="Label" 
+                                   name="label" 
+                                   onChange={ (e) =>  handleChange(e, this) } />
                     </div>
                 </div>
 
