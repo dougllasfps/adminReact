@@ -9,60 +9,24 @@ import PermissaoForm from "./PermissaoForm";
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 
-import { getList, prepareEditar, remove, prepareInsert, find , submit } from './permissaoActions'
+import { submit } from './permissaoActions'
 
 class Permissao extends React.Component{
-
-    constructor(props){
-        super(props)
-        this.state = { pageStatus: ComponentUtils.SEARCH_STATUS }
-        this.changePageStatus = this.changePageStatus.bind(this)
-        this.prepareEditar = this.prepareEditar.bind(this)
-
-        console.log(props)
-    }
     
-    changePageStatus(pageStatus){
-        this.setState({...this.state, pageStatus: pageStatus})
-    }
-
-    prepareEditar(data){
-        console.log(data)
-        this.changePageStatus(ComponentUtils.UPDATE_STATUS)
-        this.props.prepareEditar(data)
-    }
-
-    submit(e, entity){
-        e.preventDefault();
-        this.props.submit(entity)
-    }
-
     render(){
-        let pageStatus = this.state.pageStatus || ComponentUtils.SEARCH_STATUS;
+        let pageStatus = this.props.pageStatus ? this.props.pageStatus : ComponentUtils.SEARCH_STATUS;       
+        let renderList = pageStatus === ComponentUtils.SEARCH_STATUS
 
-        console.log('render page status ', ComponentUtils.SEARCH_STATUS)
-
-        if( pageStatus === ComponentUtils.SEARCH_STATUS ){
+        if( renderList ){
             return (
-                <PermissaoList 
-                        find={this.props.find} 
-                        prepareInsert={ () => this.props.prepareInsert} 
-                        prepareEditar={ this.prepareEditar } 
-                        remove={this.props.remove}
-                />
+                <PermissaoList />
             )
         }else{
             return (
-                <PermissaoForm onSubmit={this.submit} />
+                <PermissaoForm  />
             )
         }
     }
 }
 
-const mapStateToProps = state => ({
-    pageStatus: state.permissoes.pageStatus,
-    permissoes: state.permissoes.list
-})
-const mapDispatchToProps = dispatch => bindActionCreators({getList, prepareEditar, remove, prepareInsert, find, submit}, dispatch)
-
-export default connect(mapStateToProps, mapDispatchToProps) (Permissao)
+export default connect(state => ({ pageStatus: state.permissoes.pageStatus })) (Permissao)

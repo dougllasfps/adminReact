@@ -4,7 +4,7 @@ import
     submit as genericSubmit,
     getList as genericGetList
 
-} from '../../api/generic/genericActionCreator'
+} from '../../api/generic/reduxUtil'
 
 import {MODULO_FORM, MODULO_ALL,MODULO_FIND,MODULO_PAGE_MODE_CHANGED,BASE_URL,NEW_ENTITY} from './ModuloService'
 import axios from 'axios'

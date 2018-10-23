@@ -1,6 +1,21 @@
 import axios from 'axios'
 import {showSuccessMessage, showErrorMessage, showWarnMessage} from '../../../components/messages/messages'
 
+export const createReducer = ( prefix, state , action ) => {
+    switch (action.type) {
+        case `${prefix}_ALL`:
+            return {...state, list: action.payload}
+        case `${prefix}_FIND`:
+            return {...state, list: action.payload}
+        case `${prefix}_FORM`:
+            return {...state, entity: action.payload}
+        case `${prefix}_PAGE_MODE_CHANGED`:
+            return {...state, pageStatus: action.payload}
+        default:
+            return state
+    }
+}
+
 export function find(requestMapping, query, actionCreator){
 
     let url = `${requestMapping}/find?${query}`;

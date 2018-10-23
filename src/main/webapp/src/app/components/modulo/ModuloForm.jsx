@@ -12,10 +12,6 @@ const NEW_ENTITY = {descricao:'', label: ''}
 
 class ModuloForm extends React.Component{
 
-    handleSubmit = (modulo) => {
-        this.props.submit(modulo)
-    }
-
     render(){
         const entity = this.props.entity || NEW_ENTITY
 
@@ -25,7 +21,7 @@ class ModuloForm extends React.Component{
         return (
             <DefaultFormPage
                 entity={entity}
-                handleSubmit={this.handleSubmit}
+                handleSubmit={this.props.submit}
                 handleCancel={this.props.cancel}
                 pageTitle={pageTitle}
                 submitLabel={submitLabel} >

@@ -22,15 +22,10 @@ class Modulo extends React.Component{
             )
         }else{
             return (
-                <ModuloForm onSubmit={this.props.submit} />
+                <ModuloForm />
             )
         }
     }
 }
 
-export default connect(
-    state => ({
-        pageStatus: state.modulos.pageStatus
-    }),
-    dispatch => bindActionCreators ( {submit}, dispatch )
-) (Modulo)
+export default connect( state => ({ pageStatus: state.modulos.pageStatus })) (Modulo)

@@ -1,15 +1,9 @@
 import axios from 'axios'
 import { showSuccessMessage, showErrorMessage } from '../../../components/messages/messages'
-import
-{
-    find as genericFind,
-    submit as genericSubmit,
-    getList as genericGetList
-
-} from '../../api/generic/genericActionCreator'
+import { find as genericFind, submit as genericSubmit, getList as genericGetList } from '../../api/generic/reduxUtil'
+import ComponentUtils from '../../../components/util/ComponentUtils'
 
 const BASE_URL = `${process.env.REACT_APP_BASE_SERVICE_URL}/api/permissoes`
-
 export const NEW_ENTITY = {descricao:'', label: ''}
 
 export function find( permissao ){
@@ -48,17 +42,17 @@ export function prepareInsert(){
     ]
 }
 
-export function prepareEditar(permissao){
+export function prepareEditar(entity){
     return [
         toForm(entity),
         pageMode(ComponentUtils.UPDATE_STATUS)
     ]
 }
 
-function toForm(permissao){
+function toForm(entity){
     return {
         type: 'PERMISSAO_FORM',
-        payload: permissao
+        payload: entity
     }
 }
 

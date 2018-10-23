@@ -13,21 +13,17 @@ import {getList as listaModulos} from '../modulo/moduloActions'
 const NEW_ENTITY = {descricao:'', label: ''}
 
 class PermissaoForm extends React.Component{
-
-    onSubmit = (permissao) => {
-        this.props.submit(permissao)
-    }
     
     render(){
         const entity = this.props.entity || NEW_ENTITY
 
         let submitLabel = entity.id ? 'Atualizar' : 'Salvar';
-        let pageTitle = entity.id ? 'Atualização de Modulo' : 'Cadastro de Modulo';
+        let pageTitle   = entity.id ? 'Atualização de Modulo' : 'Cadastro de Modulo';
 
         return (
             <DefaultFormPage
                 entity={entity}
-                handleSubmit={this.onSubmit}
+                handleSubmit={this.props.submit}
                 handleCancel={this.props.cancel}
                 pageTitle={pageTitle}
                 submitLabel={submitLabel} >
