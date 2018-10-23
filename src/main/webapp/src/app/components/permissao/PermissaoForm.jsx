@@ -28,11 +28,19 @@ class PermissaoForm extends React.Component{
                 <div className="p-grid">
                     <div className="p-md-6">
                         <label htmlFor="inputDesc">Descrição: *</label>
-                        <input type="text" id="inputDesc" name="descricao" className="p-inputtext p-component" onChange={(e) => handleChange(e, this)} />
+                        <input type="text" 
+                               id="inputDesc" 
+                               name="descricao" 
+                               className="p-inputtext p-component" 
+                               onChange={(e) => handleChange(e, this)} />
                     </div>
                     <div className="p-md-6">
                         <label htmlFor="inputLabel">Label: *</label>
-                        <input type="text" id="inputLabel" name="label" className="p-inputtext p-component" onChange={(e) => handleChange(e, this)}/>
+                        <input type="text" 
+                               id="inputLabel" 
+                               name="label" 
+                               className="p-inputtext p-component" 
+                               onChange={(e) => handleChange(e, this)}/>
                     </div>
                 </div>
 

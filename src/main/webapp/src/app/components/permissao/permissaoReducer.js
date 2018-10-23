@@ -11,6 +11,7 @@ export default function(state = INITIAL_STATE, action) {
         case 'PERMISSAO_FIND':
         return {...state, list: action.payload}
         case 'PERMISSAO_ALL':
+            console.log('permissao_all ', action.payload)
             return {...state, list: action.payload}
         case 'PERMISSAO_FORM':
             return {...state, entity: action.payload}

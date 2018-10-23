@@ -1,5 +1,6 @@
 package org.dougllasfps.application.model.controleacesso;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.dougllasfps.application.model.BaseEntity;
 
 import javax.persistence.*;
@@ -28,7 +29,8 @@ public class Permissao implements BaseEntity {
     @Column(name = "label")
     private String label;
 
-    @OneToMany(mappedBy = "permissao")
+    @JsonIgnore
+    @OneToMany(mappedBy = "permissao", fetch = FetchType.LAZY)
     private List<ModuloPermissao> modulos;
 
     public Permissao(String descricao, String label) {

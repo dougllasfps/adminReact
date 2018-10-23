@@ -17,6 +17,7 @@ export function submit(permissao){
 }
 
 export function getList(){
+    console.log(` get List ${BASE_URL} `)
     return genericGetList(BASE_URL, 'PERMISSAO_ALL')
 }
 
