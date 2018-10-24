@@ -13,11 +13,10 @@ import { getList, prepareEditar, remove, prepareInsert, find } from './moduloAct
 
 class ModuloList extends React.Component{
 
-        state = {
-            descricao: '',
-            label: ''
-        };
-
+    state = {
+        descricao: '',
+        label: ''
+    };
 
     componentWillMount(){
         this.props.getList()

@@ -70,5 +70,5 @@ const mapStateToProps = state => ({
     list: state.permissoes.list
 })
 
-const mapDispatchToProps = dispatch => bindActionCreators({getList,prepareInsert,prepareEditar,remove, find}, dispatch)
+const mapDispatchToProps = dispatch => bindActionCreators({getList, prepareEditar, remove, prepareInsert, find}, dispatch)
 export default connect(mapStateToProps, mapDispatchToProps) (PermissaoList)

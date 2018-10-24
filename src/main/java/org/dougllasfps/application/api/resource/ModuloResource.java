@@ -2,6 +2,8 @@ package org.dougllasfps.application.api.resource;
 
 import org.dougllasfps.application.api.ResponseData;
 import org.dougllasfps.application.model.controleacesso.Modulo;
+import org.dougllasfps.application.model.controleacesso.dto.ModuloDTO;
+import org.dougllasfps.application.model.converter.ModuloDtoConverter;
 import org.dougllasfps.application.service.ModuloService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,15 +20,17 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/modulos")
-public class ModuloResource extends CrudResource<Modulo, ModuloService>{
+public class ModuloResource extends CrudResource< ModuloDTO, ModuloService, ModuloDtoConverter >{
 
     @GetMapping("/find")
     public ResponseEntity find( @RequestParam("descricao") String descricao, @RequestParam("label") String label ){
-        List<Modulo> result = getService().find(new Modulo(descricao, label));
+        List result = getService().find(new Modulo(descricao, label));
 
         if(result.isEmpty()){
             return new ResponseEntity(ResponseData.ofWarning("Nenhum item encontrado."), HttpStatus.NOT_FOUND);
         }
+
+        result = getDtoConverter().toDto().convert(result);
 
         return ResponseEntity.ok(ResponseData.of(result));
     }

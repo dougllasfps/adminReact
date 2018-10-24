@@ -7,7 +7,4 @@ public interface BaseEntity {
 
     Long getId();
 
-    default boolean isPersisted(){
-        return getId() != null;
-    }
 }

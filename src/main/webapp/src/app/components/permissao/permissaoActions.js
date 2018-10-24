@@ -12,12 +12,10 @@ export function find( permissao ){
 }
 
 export function submit(permissao){
-    console.log('submiting', permissao)
-    return genericSubmit(BASE_URL,permissao )
+    return genericSubmit(BASE_URL, pageMode(ComponentUtils.SEARCH_STATUS) )
 }
 
 export function getList(){
-    console.log(` get List ${BASE_URL} `)
     return genericGetList(BASE_URL, 'PERMISSAO_ALL')
 }
 
@@ -39,7 +37,8 @@ export function remove(id){
 
 export function prepareInsert(){
     return [
-        toForm(NEW_ENTITY)
+        toForm(NEW_ENTITY),
+        pageMode(ComponentUtils.INSERT_STATUS)
     ]
 }
 
@@ -58,7 +57,7 @@ function toForm(entity){
 }
 
 export function cancel(){
-
+    return pageMode(ComponentUtils.SEARCH_STATUS)
 }
 
 function pageMode(mode){

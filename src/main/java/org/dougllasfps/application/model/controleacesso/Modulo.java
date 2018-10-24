@@ -3,7 +3,6 @@ package org.dougllasfps.application.model.controleacesso;
 import org.dougllasfps.application.model.BaseEntity;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 
 @Entity
@@ -16,11 +15,9 @@ public class Modulo implements Serializable, BaseEntity {
     private Long id;
 
     @Column
-    @NotEmpty(message = "{campo.descricao.obrigatorio}")
     private String descricao;
 
     @Column
-    @NotEmpty(message = "{campo.label.obrigatorio}")
     private String label;
 
     public Modulo() {
