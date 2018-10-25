@@ -8,8 +8,7 @@ import {bindActionCreators} from 'redux'
 import DefaultListPage from '../../templates/DefaultListPage'
 import {handleChange} from '../../../components/util/ComponentUtils'
 
-import { getList,remove,prepareEditar,prepareInsert,find } from './permissaoActions'
-
+import { getList, prepareEditar, remove, prepareInsert, find } from './permissaoActions'
 
 class PermissaoList extends React.Component{
 

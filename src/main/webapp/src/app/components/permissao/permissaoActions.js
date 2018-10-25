@@ -43,6 +43,7 @@ export function prepareInsert(){
 }
 
 export function prepareEditar(entity){
+    console.log(entity)
     return [
         toForm(entity),
         pageMode(ComponentUtils.UPDATE_STATUS)
@@ -56,13 +57,13 @@ function toForm(entity){
     }
 }
 
-export function cancel(){
-    return pageMode(ComponentUtils.SEARCH_STATUS)
-}
-
 function pageMode(mode){
     return {
-        type: 'PERMISSAO_PAGE_STATUS',
+        type: 'PERMISSAO_PAGE_MODE_CHANGED',
         payload: mode
     }
+}
+
+export function cancel(){
+    return pageMode(ComponentUtils.SEARCH_STATUS)
 }

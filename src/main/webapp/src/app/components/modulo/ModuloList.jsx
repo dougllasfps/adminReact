@@ -8,7 +8,6 @@ import {bindActionCreators} from 'redux'
 import DefaultListPage from '../../templates/DefaultListPage'
 import  {handleChange} from '../../../components/util/ComponentUtils'
 
-
 import { getList, prepareEditar, remove, prepareInsert, find } from './moduloActions'
 
 class ModuloList extends React.Component{
