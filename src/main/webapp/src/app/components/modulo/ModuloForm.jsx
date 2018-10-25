@@ -25,14 +25,21 @@ class ModuloForm extends React.Component{
                 handleCancel={this.props.cancel}
                 pageTitle={pageTitle}
                 submitLabel={submitLabel} >
+                
                 <div className="p-grid">
                     <div className="p-md-6">
                         <label htmlFor="inputDesc">Descrição: *</label>
-                        <Field id="inputDesc" component="input" name="descricao" className="p-inputtext p-component"/>
+                        <Field id="inputDesc" 
+                               component="input" 
+                               name="descricao" 
+                               className="p-inputtext p-component"/>
                     </div>
                     <div className="p-md-6">
                         <label htmlFor="inputLabel">Label: *</label>
-                        <Field id="inputLabel"  component="input" name="label" className="p-inputtext p-component"/>
+                        <Field id="inputLabel"  
+                               component="input" 
+                               name="label" 
+                               className="p-inputtext p-component"/>
                     </div>
                 </div>
 

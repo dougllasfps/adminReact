@@ -1,22 +1,21 @@
 import axios from 'axios'
-import { showSuccessMessage, showErrorMessage } from '../../../components/messages/messages'
 import { find as genericFind, submit as genericSubmit, getList as genericGetList } from '../../api/generic/reduxUtil'
-import ComponentUtils from '../../../components/util/ComponentUtils'
 
-const BASE_URL = `${process.env.REACT_APP_BASE_SERVICE_URL}/api/permissoes`
-export const NEW_ENTITY = {descricao:'', label: ''}
+import {PERMISSAO_FORM,PERMISSAO_ALL,PERMISSAO_FIND,PERMISSAO_PAGE_MODE_CHANGED,BASE_URL,NEW_ENTITY} from './PermissaoService'
+import { showSuccessMessage, showErrorMessage } from '../../../components/messages/messages'
+import ComponentUtils from '../../../components/util/ComponentUtils'
 
 export function find( permissao ){
     let query = `descricao=${permissao.descricao}&label=${permissao.label}`;
-    return genericFind( BASE_URL, query, 'PERMISSAO_FIND')
+    return genericFind( BASE_URL, query, PERMISSAO_FIND)
 }
 
 export function submit(permissao){
-    return genericSubmit(BASE_URL, pageMode(ComponentUtils.SEARCH_STATUS) )
+    return genericSubmit(BASE_URL, permissao, pageMode(ComponentUtils.SEARCH_STATUS) )
 }
 
 export function getList(){
-    return genericGetList(BASE_URL, 'PERMISSAO_ALL')
+    return genericGetList(BASE_URL, PERMISSAO_ALL)
 }
 
 export function remove(id){
@@ -52,14 +51,14 @@ export function prepareEditar(entity){
 
 function toForm(entity){
     return {
-        type: 'PERMISSAO_FORM',
+        type: PERMISSAO_FORM,
         payload: entity
     }
 }
 
 function pageMode(mode){
     return {
-        type: 'PERMISSAO_PAGE_MODE_CHANGED',
+        type: PERMISSAO_PAGE_MODE_CHANGED,
         payload: mode
     }
 }

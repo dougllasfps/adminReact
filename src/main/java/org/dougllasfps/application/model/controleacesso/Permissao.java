@@ -29,7 +29,6 @@ public class Permissao implements BaseEntity {
     @Column(name = "label")
     private String label;
 
-    @JsonIgnore
     @OneToMany(mappedBy = "permissao", fetch = FetchType.LAZY)
     private List<ModuloPermissao> modulos;
 

@@ -1,5 +1,7 @@
 package org.dougllasfps.application.model.converter;
 
+import org.dougllasfps.application.model.controleacesso.Modulo;
+import org.dougllasfps.application.model.controleacesso.ModuloPermissao;
 import org.dougllasfps.application.model.controleacesso.Permissao;
 import org.dougllasfps.application.model.controleacesso.dto.PermissaoDTO;
 import org.dougllasfps.application.model.converter.generic.DtoConverter;
@@ -7,6 +9,9 @@ import org.dougllasfps.application.model.converter.generic.RequestResponseConver
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Criado por dougllas.sousa em 24/10/2018.
@@ -30,8 +35,8 @@ public class PermissaoDtoConverter implements RequestResponseConverter<Permissao
     public DtoConverter<Permissao, PermissaoDTO> toDto() {
         return permissao -> {
             PermissaoDTO dto = modelMapper.map(permissao, PermissaoDTO.class);
-//            List<Modulo> modulos = permissao.getModulos().stream().map(ModuloPermissao::getModulo).collect(Collectors.toList());
-//            dto.setModulos( moduloDtoConverter.toDto().convert(modulos) );
+            List<Modulo> modulos = permissao.getModulos().stream().map(ModuloPermissao::getModulo).collect(Collectors.toList());
+            dto.setModulos( moduloDtoConverter.toDto().convert(modulos) );
             return dto;
         };
     }

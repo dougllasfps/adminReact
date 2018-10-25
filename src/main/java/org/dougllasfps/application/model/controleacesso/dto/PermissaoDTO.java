@@ -1,12 +1,14 @@
 package org.dougllasfps.application.model.controleacesso.dto;
 
+import org.dougllasfps.application.model.BaseEntity;
+
 import java.io.Serializable;
 import java.util.List;
 
 /**
  * Criado por dougllas.sousa em 24/10/2018.
  */
-public class PermissaoDTO implements Serializable{
+public class PermissaoDTO implements Serializable, BaseEntity {
 
     private Long id;
     private String descricao;

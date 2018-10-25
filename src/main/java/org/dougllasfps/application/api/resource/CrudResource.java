@@ -76,7 +76,7 @@ public class CrudResource<T extends BaseEntity, S extends AbstractService, C ext
         }
 
         if(!service.exists(id)){
-            ResponseData responseData = ResponseData.of("Permissão não encontrada para o id " + id);
+            ResponseData responseData = ResponseData.of("Entidade não encontrada para o id " + id);
             return new ResponseEntity<>(responseData, HttpStatus.NOT_FOUND);
         }
 

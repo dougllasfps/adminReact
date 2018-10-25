@@ -8,6 +8,9 @@ export default class DefaultFormPage extends React.Component{
 
         const initialValues = this.props.entity;
 
+        console.log(`Initial values: ${initialValues}`)
+
+
         const form = ({ handleSubmit, pristine, invalid }) => (
 
             <form onSubmit={handleSubmit}>
