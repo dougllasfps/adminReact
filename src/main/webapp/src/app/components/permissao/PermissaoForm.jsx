@@ -2,61 +2,38 @@ import React from 'react'
 import {Field} from 'react-final-form'
 import {PickList} from 'primereact/picklist';
 
-
 import DefaultFormPage from '../../templates/DefaultFormPage'
 
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import {cancel, submit,setModulos} from './permissaoActions'
-import {getListPromisse} from '../modulo/moduloActions'
 
 const NEW_ENTITY = {descricao:'', label: '', modulos : []}
 
-class PermissaoForm extends React.Component {
+class PermissaoForm extends React.Component {    
 
-    state = {
-        modulosDisponiveis: [],
-        modulosSelecionados: []
+    onSubmit = (permissao) => {
+        permissao = {...permissao, modulos: this.props.modulosAdicionados}
+        this.props.submit(permissao)
     }
 
-    componentWillMount(){
-        let self = this;
-        getListPromisse()
-            .then( resp => {
-                self.setState({...this.state, modulosDisponiveis: resp.data.data})
-            })
+    onModulosChange = (event) => {
+        const listas = { adicionados : event.target, disponiveis: event.source }
+        this.props.setModulos(listas)
     }
 
     moduloTemplate = (modulo) => {
         return(
             <div className="p-clearfix">
-                <div style={{ fontSize: '14px', float: 'right', margin: '15px 5px 0 0' }}>{modulo.descricao}</div>
+                <div key={modulo.id} style={{ fontSize: '14px', float: 'right', margin: '15px 5px 0 0' }}>
+                    {modulo.descricao}
+                </div>
             </div>
         )
-    }
-
-    onSubmit = (permissao) => {
-        permissao = {...permissao, modulos: this.state.modulosSelecionados}
-        this.props.submit(permissao)
     }
     
     render(){
         const entity = this.props.entity || NEW_ENTITY
-        const modulosAdicionados = this.props.modulos || []
-
-        console.log(` adicionados: ${modulosAdicionados}`)
-
-        if(modulosAdicionados){
-            modulosAdicionados.forEach( m => {
-                this.state.modulosDisponiveis.pop(m)
-            })
-
-            this.state.modulosSelecionados = modulosAdicionados
-        }
-       
-        console.log(` disp: ${this.state.modulosDisponiveis}`)
-        console.log(` add: ${this.state.modulosSelecionados}`)
-
         let submitLabel = entity.id ? 'Atualizar' : 'Salvar';
         let pageTitle   = entity.id ? 'Atualização de Permissão' : 'Cadastro de Permissão';
 
@@ -87,15 +64,16 @@ class PermissaoForm extends React.Component {
 
                 <br />
 
-
                 <div className="p-grid">
-
                     <div className="p-md-12">
-                        <PickList   source={this.state.modulosDisponiveis} 
-                                    target={this.state.modulosSelecionados} 
+                        <PickList   showSourceControls={false}
+                                    showTargetControls={false}                                    
+                                    source={this.props.modulosDisponiveis} 
+                                    target={this.props.modulosAdicionados} 
                                     itemTemplate={this.moduloTemplate}  
-                                    sourceHeader="Disponíveis" targetHeader="Selecionados"
-                                    onChange={(e) => this.props.setModulos(e.target) } 
+                                    sourceHeader="Disponíveis" 
+                                    targetHeader="Selecionados"
+                                    onChange={ (e) => this.onModulosChange(e) } 
                                     responsive={true} />
                     </div>
                 </div>
@@ -107,7 +85,8 @@ class PermissaoForm extends React.Component {
 
 const mapStateToProps = state => ({
     entity: state.permissoes.entity,
-    modulos: state.permissoes.modulosAdicionados
+    modulosAdicionados: state.permissoes.modulosAdicionados,
+    modulosDisponiveis: state.permissoes.modulosDisponiveis
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators ( {cancel, submit,setModulos}, dispatch)

@@ -1,10 +1,8 @@
 package org.dougllasfps.application.model.controleacesso;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.dougllasfps.application.model.BaseEntity;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
 import java.util.ArrayList;
 import java.util.List;
 

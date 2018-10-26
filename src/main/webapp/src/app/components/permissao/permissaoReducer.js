@@ -12,8 +12,8 @@ export default function(state = INITIAL_STATE, action) {
     state = createReducer('PERMISSAO', state, action)
 
     switch(action.type){
-        case 'PERMISSAO_MODULOS_ADD':
-            return {...state, modulosAdicionados: action.payload}
+        case 'PERMISSAO_MODULOS_ADD_REMOVE':
+            return {...state, modulosAdicionados: action.modulos.adicionados, modulosDisponiveis: action.modulos.disponiveis}
         default:
             return state;
     }

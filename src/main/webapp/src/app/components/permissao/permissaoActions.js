@@ -41,13 +41,12 @@ export function prepareInsert(){
     ]
 }
 
-export function prepareEditar(entity){
-
+export function prepareEditar( entity ){
     return dispatch => {
         axios
             .get(`${BASE_URL}/${entity.id}/alldata`)
             .then( resp => {
-                dispatch( toFormUpdateStatus(resp.data.data) )
+                dispatch( prepareFormToUpdate(resp.data.data) )
             }).catch(e => {
                 e.response.data.errors.forEach(error => {
                     showErrorMessage(error)
@@ -57,9 +56,12 @@ export function prepareEditar(entity){
 
 }
 
-function toFormUpdateStatus(entity){
+function prepareFormToUpdate( entity ){
+    const modulos = {adicionados: entity.modulos, disponiveis: entity.modulosNaoAdicionados};
+    console.log('modulos ', modulos)
     return [
         toForm(entity),
+        setModulos(modulos),
         pageMode(ComponentUtils.UPDATE_STATUS)
     ]
 }
@@ -82,9 +84,12 @@ export function cancel(){
     return pageMode(ComponentUtils.SEARCH_STATUS)
 }
 
-export function setModulos( modulos ){
+export function setModulos( {adicionados,disponiveis} ){
     return{
-        type: 'PERMISSAO_MODULOS_ADD',
-        payload: modulos
+        type: 'PERMISSAO_MODULOS_ADD_REMOVE',
+        modulos: {
+            adicionados,
+            disponiveis
+        }
     }
 }

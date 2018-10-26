@@ -21,6 +21,8 @@ public class PermissaoDTO implements Serializable, BaseEntity {
     private String label;
     private List<ModuloDTO> modulos;
 
+    private List<ModuloDTO> modulosNaoAdicionados;
+
     public Long getId() {
         return id;
     }
@@ -54,5 +56,16 @@ public class PermissaoDTO implements Serializable, BaseEntity {
 
     public void setModulos(List<ModuloDTO> modulos) {
         this.modulos = modulos;
+    }
+
+    public List<ModuloDTO> getModulosNaoAdicionados() {
+        if(modulosNaoAdicionados == null){
+            modulosNaoAdicionados = new ArrayList<>();
+        }
+        return modulosNaoAdicionados;
+    }
+
+    public void setModulosNaoAdicionados(List<ModuloDTO> modulosNaoAdicionados) {
+        this.modulosNaoAdicionados = modulosNaoAdicionados;
     }
 }

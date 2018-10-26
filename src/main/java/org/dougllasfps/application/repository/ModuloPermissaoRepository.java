@@ -9,5 +9,7 @@ import java.util.List;
  * Criado por dougllas.sousa em 19/10/2018.
  */
 public interface ModuloPermissaoRepository extends FullRepository<ModuloPermissao>{
+
     List<ModuloPermissao> findByPermissao(Permissao permissao);
+
 }

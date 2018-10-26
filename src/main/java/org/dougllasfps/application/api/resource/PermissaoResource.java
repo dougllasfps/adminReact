@@ -2,9 +2,11 @@ package org.dougllasfps.application.api.resource;
 
 
 import org.dougllasfps.application.api.ResponseData;
+import org.dougllasfps.application.model.controleacesso.Modulo;
 import org.dougllasfps.application.model.controleacesso.ModuloPermissao;
 import org.dougllasfps.application.model.controleacesso.Permissao;
 import org.dougllasfps.application.model.controleacesso.dto.PermissaoDTO;
+import org.dougllasfps.application.model.converter.ModuloDtoConverter;
 import org.dougllasfps.application.model.converter.PermissaoDtoConverter;
 import org.dougllasfps.application.service.PermissaoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,8 @@ public class PermissaoResource extends CrudResource<PermissaoDTO, PermissaoServi
 
     @Autowired
     private PermissaoDtoConverter dtoConverter;
+    @Autowired
+    private ModuloDtoConverter moduloDtoConverter;
 
     @GetMapping("/find")
     public ResponseEntity find( @RequestParam("descricao") String descricao, @RequestParam("label") String label){
@@ -52,10 +56,16 @@ public class PermissaoResource extends CrudResource<PermissaoDTO, PermissaoServi
             return ResponseEntity.badRequest().body(ResponseData.ofError("Entidade não encontrada para o id passado."));
         }
 
-        List<ModuloPermissao> modulos = getService().obterModulos(entity.get());
-        entity.get().setModulos(modulos);
+        Permissao permissao = entity.get();
 
-        PermissaoDTO dto = getDtoConverter().toDto().convert(entity.get());
+        List<ModuloPermissao> modulos   = getService().obterModulos(permissao);
+
+        permissao.setModulos(modulos);
+
+        PermissaoDTO dto = getDtoConverter().toDto().convert(permissao);
+        List<Modulo> modulosDisponiveis = getService().obterModulosNaoAssociados(permissao);
+
+        dto.setModulosNaoAdicionados(moduloDtoConverter.toDto().convert(modulosDisponiveis));
 
         return ResponseEntity.ok(ResponseData.of(dto));
     }
