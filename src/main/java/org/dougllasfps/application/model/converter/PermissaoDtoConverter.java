@@ -28,7 +28,17 @@ public class PermissaoDtoConverter implements RequestResponseConverter<Permissao
 
     @Override
     public DtoConverter<PermissaoDTO, Permissao> toEntity() {
-        return permissao -> modelMapper.map( permissao, Permissao.class );
+        return dto -> {
+            Permissao entity = modelMapper.map(dto, Permissao.class);
+            entity.getModulos().clear();
+            dto.getModulos().forEach( m  -> {
+                ModuloPermissao moduloPermissao = new ModuloPermissao();
+                moduloPermissao.setModulo(moduloDtoConverter.toEntity().convert(m));
+                moduloPermissao.setPermissao(entity);
+                entity.getModulos().add(moduloPermissao);
+            });
+            return entity;
+        };
     }
 
     @Override

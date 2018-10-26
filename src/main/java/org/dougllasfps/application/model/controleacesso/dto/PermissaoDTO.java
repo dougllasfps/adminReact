@@ -2,7 +2,9 @@ package org.dougllasfps.application.model.controleacesso.dto;
 
 import org.dougllasfps.application.model.BaseEntity;
 
+import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -11,7 +13,11 @@ import java.util.List;
 public class PermissaoDTO implements Serializable, BaseEntity {
 
     private Long id;
+
+    @NotEmpty(message = "{campo.descricao.obrigatorio}")
     private String descricao;
+
+    @NotEmpty(message = "{campo.label.obrigatorio}")
     private String label;
     private List<ModuloDTO> modulos;
 
@@ -40,6 +46,9 @@ public class PermissaoDTO implements Serializable, BaseEntity {
     }
 
     public List<ModuloDTO> getModulos() {
+        if(modulos == null){
+            modulos = new ArrayList<>();
+        }
         return modulos;
     }
 

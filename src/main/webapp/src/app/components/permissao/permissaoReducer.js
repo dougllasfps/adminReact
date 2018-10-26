@@ -9,5 +9,12 @@ const INITIAL_STATE = {
 }
 
 export default function(state = INITIAL_STATE, action) {
-    return createReducer('PERMISSAO', state, action)
+    state = createReducer('PERMISSAO', state, action)
+
+    switch(action.type){
+        case 'PERMISSAO_MODULOS_ADD':
+            return {...state, modulosAdicionados: action.payload}
+        default:
+            return state;
+    }
 }

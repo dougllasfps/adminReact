@@ -42,7 +42,22 @@ export function prepareInsert(){
 }
 
 export function prepareEditar(entity){
-    console.log(entity)
+
+    return dispatch => {
+        axios
+            .get(`${BASE_URL}/${entity.id}/alldata`)
+            .then( resp => {
+                dispatch( toFormUpdateStatus(resp.data.data) )
+            }).catch(e => {
+                e.response.data.errors.forEach(error => {
+                    showErrorMessage(error)
+                })
+            });    
+    }
+
+}
+
+function toFormUpdateStatus(entity){
     return [
         toForm(entity),
         pageMode(ComponentUtils.UPDATE_STATUS)
@@ -65,4 +80,11 @@ function pageMode(mode){
 
 export function cancel(){
     return pageMode(ComponentUtils.SEARCH_STATUS)
+}
+
+export function setModulos( modulos ){
+    return{
+        type: 'PERMISSAO_MODULOS_ADD',
+        payload: modulos
+    }
 }

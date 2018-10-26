@@ -5,6 +5,7 @@ import org.dougllasfps.application.model.BaseEntity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import java.util.ArrayList;
 import java.util.List;
 
 //import org.springframework.security.core.GrantedAuthority;
@@ -21,11 +22,9 @@ public class Permissao implements BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotEmpty(message = "{campo.descricao.obrigatorio}")
     @Column(name = "descricao")
     private String descricao;
 
-    @NotEmpty(message = "{campo.label.obrigatorio}")
     @Column(name = "label")
     private String label;
 
@@ -68,6 +67,8 @@ public class Permissao implements BaseEntity {
     }
 
     public List<ModuloPermissao> getModulos() {
+        if(modulos == null)
+            modulos = new ArrayList<>();
         return modulos;
     }
 

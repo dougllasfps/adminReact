@@ -18,6 +18,10 @@ export function getList(){
     return genericGetList(BASE_URL, MODULO_ALL)
 }
 
+export function getListPromisse(){
+    return axios.get(BASE_URL);
+}
+
 export function remove(id){
     return dispatch => {
         axios

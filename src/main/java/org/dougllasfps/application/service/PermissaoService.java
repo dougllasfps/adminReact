@@ -27,11 +27,11 @@ public class PermissaoService extends AbstractServiceImpl<Permissao, PermissaoRe
 
         ValidationException e = new ValidationException();
 
-        if(getRepository().existsByLabel(permissao.getLabel())){
+        if(permissao.getId() == null && getRepository().existsByLabel(permissao.getLabel())){
             e.addError("Label já cadastrado anteriomente.");
         }
 
-        if(getRepository().existsByDescricao(permissao.getDescricao())){
+        if(permissao.getId() == null && getRepository().existsByDescricao(permissao.getDescricao())){
             e.addError("Descrição já cadastrada anteriomente.");
         }
 
@@ -43,4 +43,20 @@ public class PermissaoService extends AbstractServiceImpl<Permissao, PermissaoRe
         return  moduloPermissaoRepository.findByPermissao(permissao);
     }
 
+    @Override
+    public Permissao save(Permissao permissao) {
+        return saveOrUpdate(permissao);
+    }
+
+    @Override
+    public Permissao update(Permissao permissao) {
+        return saveOrUpdate(permissao);
+    }
+
+    @Override
+    public Permissao saveOrUpdate(Permissao permissao) {
+        super.save(permissao);
+        moduloPermissaoRepository.saveAll(permissao.getModulos());
+        return permissao;
+    }
 }

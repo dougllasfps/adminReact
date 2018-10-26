@@ -53,8 +53,11 @@ public class PermissaoResource extends CrudResource<PermissaoDTO, PermissaoServi
         }
 
         List<ModuloPermissao> modulos = getService().obterModulos(entity.get());
-//        entity.get().setModulos(modulos);
-        return ResponseEntity.ok(ResponseData.of(entity.get()));
+        entity.get().setModulos(modulos);
+
+        PermissaoDTO dto = getDtoConverter().toDto().convert(entity.get());
+
+        return ResponseEntity.ok(ResponseData.of(dto));
     }
 
     @Override

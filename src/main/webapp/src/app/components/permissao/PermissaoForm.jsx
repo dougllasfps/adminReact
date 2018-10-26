@@ -1,27 +1,61 @@
 import React from 'react'
 import {Field} from 'react-final-form'
+import {PickList} from 'primereact/picklist';
+
 
 import DefaultFormPage from '../../templates/DefaultFormPage'
-import  {handleChange} from '../../../components/util/ComponentUtils'
 
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
-import {cancel, submit} from './permissaoActions'
-import {getList as listaModulos} from '../modulo/moduloActions'
+import {cancel, submit,setModulos} from './permissaoActions'
+import {getListPromisse} from '../modulo/moduloActions'
 
 const NEW_ENTITY = {descricao:'', label: '', modulos : []}
 
 class PermissaoForm extends React.Component {
 
+    state = {
+        modulosDisponiveis: [],
+        modulosSelecionados: []
+    }
+
     componentWillMount(){
-        this.props.listaModulos();
+        let self = this;
+        getListPromisse()
+            .then( resp => {
+                self.setState({...this.state, modulosDisponiveis: resp.data.data})
+            })
+    }
+
+    moduloTemplate = (modulo) => {
+        return(
+            <div className="p-clearfix">
+                <div style={{ fontSize: '14px', float: 'right', margin: '15px 5px 0 0' }}>{modulo.descricao}</div>
+            </div>
+        )
+    }
+
+    onSubmit = (permissao) => {
+        permissao = {...permissao, modulos: this.state.modulosSelecionados}
+        this.props.submit(permissao)
     }
     
     render(){
         const entity = this.props.entity || NEW_ENTITY
-        const modulos = this.props.modulos || []
+        const modulosAdicionados = this.props.modulos || []
 
-        console.log(modulos)
+        console.log(` adicionados: ${modulosAdicionados}`)
+
+        if(modulosAdicionados){
+            modulosAdicionados.forEach( m => {
+                this.state.modulosDisponiveis.pop(m)
+            })
+
+            this.state.modulosSelecionados = modulosAdicionados
+        }
+       
+        console.log(` disp: ${this.state.modulosDisponiveis}`)
+        console.log(` add: ${this.state.modulosSelecionados}`)
 
         let submitLabel = entity.id ? 'Atualizar' : 'Salvar';
         let pageTitle   = entity.id ? 'Atualização de Permissão' : 'Cadastro de Permissão';
@@ -29,7 +63,7 @@ class PermissaoForm extends React.Component {
         return (
             <DefaultFormPage
                 entity={entity}
-                handleSubmit={this.props.submit}
+                handleSubmit={this.onSubmit}
                 handleCancel={this.props.cancel}
                 pageTitle={pageTitle}
                 submitLabel={submitLabel} >
@@ -37,19 +71,32 @@ class PermissaoForm extends React.Component {
                 <div className="p-grid">
                     <div className="p-md-6">
                         <label htmlFor="inputDesc">Descrição: *</label>
-                        <Field component="input" 
-                               id="inputDesc" 
+                        <Field id="inputDesc" 
+                               component="input" 
                                name="descricao" 
-                               className="p-inputtext p-component" 
-                               onChange={(e) => handleChange(e, this)} />
+                               className="p-inputtext p-component"/>
                     </div>
                     <div className="p-md-6">
                         <label htmlFor="inputLabel">Label: *</label>
-                        <Field component="input" 
-                               id="inputLabel" 
+                        <Field id="inputLabel"  
+                               component="input" 
                                name="label" 
-                               className="p-inputtext p-component" 
-                               onChange={(e) => handleChange(e, this)}/>
+                               className="p-inputtext p-component"/>
+                    </div>
+                </div>
+
+                <br />
+
+
+                <div className="p-grid">
+
+                    <div className="p-md-12">
+                        <PickList   source={this.state.modulosDisponiveis} 
+                                    target={this.state.modulosSelecionados} 
+                                    itemTemplate={this.moduloTemplate}  
+                                    sourceHeader="Disponíveis" targetHeader="Selecionados"
+                                    onChange={(e) => this.props.setModulos(e.target) } 
+                                    responsive={true} />
                     </div>
                 </div>
 
@@ -60,8 +107,8 @@ class PermissaoForm extends React.Component {
 
 const mapStateToProps = state => ({
     entity: state.permissoes.entity,
-    modulos: state.modulos.list
+    modulos: state.permissoes.modulosAdicionados
 })
 
-const mapDispatchToProps = dispatch => bindActionCreators ( {cancel, submit, listaModulos}, dispatch)
+const mapDispatchToProps = dispatch => bindActionCreators ( {cancel, submit,setModulos}, dispatch)
 export default connect(mapStateToProps,mapDispatchToProps) (PermissaoForm)

@@ -2,14 +2,14 @@ import React from 'react'
 import {Button} from "primereact/button";
 import { Form } from 'react-final-form'
 
+import arrayMutators from 'final-form-arrays'
+
+
 export default class DefaultFormPage extends React.Component{
 
     render(){
 
         const initialValues = this.props.entity;
-
-        console.log(`Initial values: ${initialValues}`)
-
 
         const form = ({ handleSubmit, pristine, invalid }) => (
 
@@ -39,7 +39,7 @@ export default class DefaultFormPage extends React.Component{
         )
 
         return(
-            <Form initialValues={initialValues} onSubmit={this.props.handleSubmit} render={form} />
+            <Form mutators={{...arrayMutators}} initialValues={initialValues} onSubmit={this.props.handleSubmit} render={form} />
         )
 
     }
