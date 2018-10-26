@@ -10,6 +10,7 @@ import org.dougllasfps.application.repository.PermissaoRepository;
 import org.dougllasfps.application.service.generic.impl.AbstractServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
 import java.util.List;
@@ -68,10 +69,16 @@ public class PermissaoService extends AbstractServiceImpl<Permissao, PermissaoRe
     }
 
     @Override
+    @Transactional
     public Permissao saveOrUpdate(Permissao permissao) {
         super.save(permissao);
-        moduloPermissaoRepository.saveAll(permissao.getModulos());
-        moduloPermissaoRepository.deleteAllByPermissaoAndIdNotIn(permissao, permissao.getModulos().stream().map(ModuloPermissao::getId).collect(Collectors.toList()));
+        atualizarModulos(permissao);
         return permissao;
+    }
+
+    private void atualizarModulos(Permissao permissao) {
+        moduloPermissaoRepository.saveAll(permissao.getModulos());
+        List<Long> idModulosSalvos = permissao.getModulos().stream().map(ModuloPermissao::getId).collect(Collectors.toList());
+        moduloPermissaoRepository.deleteAllByPermissaoAndIdNotIn(permissao, idModulosSalvos);
     }
 }
