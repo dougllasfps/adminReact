@@ -59,11 +59,10 @@ public class PermissaoResource extends CrudResource<PermissaoDTO, PermissaoServi
         Permissao permissao = entity.get();
 
         List<ModuloPermissao> modulos   = getService().obterModulos(permissao);
+        List<Modulo> modulosDisponiveis = getService().obterModulosNaoAssociados(permissao);
 
         permissao.setModulos(modulos);
-
         PermissaoDTO dto = getDtoConverter().toDto().convert(permissao);
-        List<Modulo> modulosDisponiveis = getService().obterModulosNaoAssociados(permissao);
 
         dto.setModulosNaoAdicionados(moduloDtoConverter.toDto().convert(modulosDisponiveis));
 
