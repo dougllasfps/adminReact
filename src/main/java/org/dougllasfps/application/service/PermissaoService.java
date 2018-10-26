@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Criado por dougllas.sousa em 10/10/2018.
@@ -52,6 +53,11 @@ public class PermissaoService extends AbstractServiceImpl<Permissao, PermissaoRe
     }
 
     @Override
+    public void beforeSaveOrUpdate(Permissao permissao) {
+        super.beforeSaveOrUpdate(permissao);
+    }
+
+    @Override
     public Permissao save(Permissao permissao) {
         return saveOrUpdate(permissao);
     }
@@ -65,6 +71,7 @@ public class PermissaoService extends AbstractServiceImpl<Permissao, PermissaoRe
     public Permissao saveOrUpdate(Permissao permissao) {
         super.save(permissao);
         moduloPermissaoRepository.saveAll(permissao.getModulos());
+        moduloPermissaoRepository.deleteAllByPermissaoAndIdNotIn(permissao, permissao.getModulos().stream().map(ModuloPermissao::getId).collect(Collectors.toList()));
         return permissao;
     }
 }

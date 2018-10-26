@@ -4,6 +4,7 @@ import org.dougllasfps.application.model.BaseEntity;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Table(name = "modulo", schema = "controle_acesso")
@@ -19,6 +20,9 @@ public class Modulo implements Serializable, BaseEntity {
 
     @Column
     private String label;
+
+    @OneToMany(mappedBy = "modulo")
+    private List<ModuloPermissao> permissoes;
 
     public Modulo() {
     }
@@ -75,5 +79,13 @@ public class Modulo implements Serializable, BaseEntity {
 
     public String toString() {
         return "Module [id=" + this.id + ", description=" + this.descricao + ", label=" + this.label + "]";
+    }
+
+    public List<ModuloPermissao> getPermissoes() {
+        return permissoes;
+    }
+
+    public void setPermissoes(List<ModuloPermissao> permissoes) {
+        this.permissoes = permissoes;
     }
 }

@@ -12,4 +12,5 @@ public interface ModuloPermissaoRepository extends FullRepository<ModuloPermissa
 
     List<ModuloPermissao> findByPermissao(Permissao permissao);
 
+    void deleteAllByPermissaoAndIdNotIn(Permissao permissao, Iterable<Long> ids);
 }

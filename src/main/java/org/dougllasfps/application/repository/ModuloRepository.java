@@ -13,6 +13,6 @@ import java.util.List;
 
 public interface ModuloRepository extends FullRepository<Modulo>{
 
-    @Query(" select m from Modulo m where not exists ( select 1 from ModuloPermissao where modulo = m and permissao <> :permissao ) ")
+    @Query(" select m from Modulo m where not exists ( select 1 from ModuloPermissao where modulo = m and permissao = :permissao ) ")
     List<Modulo> findModulosNotInPermissao( @Param("permissao") Permissao permissao );
 }
