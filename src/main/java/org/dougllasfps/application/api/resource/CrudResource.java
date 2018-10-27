@@ -22,7 +22,7 @@ public class CrudResource<T extends BaseEntity, S extends AbstractService, C ext
     private S service;
 
     @Autowired
-    private C dtoConverter;
+    protected C dtoConverter;
 
     protected S getService() {
         return service;
