@@ -15,3 +15,14 @@ create table controle_acesso.modulo_permissao(
   cd_modulo bigint,
   cd_permissao bigint
 );
+
+alter table controle_acesso.modulo_permissao
+add constraint fk_modulo_perm_permissao
+foreign key (cd_permissao)
+references controle_acesso.permissao (id);
+
+alter table controle_acesso.modulo_permissao
+add constraint fk_modulo_perm_modulo
+foreign key (cd_modulo)
+references controle_acesso.modulo (id);
+

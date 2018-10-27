@@ -25,6 +25,7 @@ class ModuloList extends React.Component{
         let list = this.props.list || [];
 
         let cols = [
+            {field: 'id', header : 'Código'},
             {field: 'descricao', header: 'Descrição'},
             {field: 'label', header: 'Label'}
         ];
@@ -36,7 +37,8 @@ class ModuloList extends React.Component{
         return (
 
             <DefaultListPage
-                         pageTitle="Módulos"
+                         icon="pi pi-th-large"
+                         pageTitle=" Módulos"
                          prepareInsert={this.props.prepareInsert}
                          prepareEditar={this.props.prepareEditar}
                          findAction={() => this.props.find(filtro)}

@@ -1,5 +1,7 @@
 import React from 'react'
 import {Field} from 'react-final-form'
+import {InputText} from 'primereact/inputtext';
+import If from '../../../components/If'
 
 import DefaultFormPage from '../../templates/DefaultFormPage'
 
@@ -20,12 +22,26 @@ class ModuloForm extends React.Component{
 
         return (
             <DefaultFormPage
+                icon="pi pi-th-large"
                 entity={entity}
                 handleSubmit={this.props.submit}
                 handleCancel={this.props.cancel}
                 pageTitle={pageTitle}
                 submitLabel={submitLabel} >
+
                 
+                <If test={entity.id}>
+                    <div className="p-grid">
+                        <div className="p-md-12">
+                            <label htmlFor="inputCodigo">Código:</label>
+                            <InputText id="inputCodigo" 
+                                   name="id" 
+                                   value={entity.id}
+                                   disabled={true}
+                                   className="p-inputtext p-component disabled"/>
+                        </div>
+                    </div>
+                </If>
                 <div className="p-grid">
                     <div className="p-md-6">
                         <label htmlFor="inputDesc">Descrição: *</label>

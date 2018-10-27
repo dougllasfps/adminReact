@@ -36,6 +36,7 @@ class PermissaoList extends React.Component{
         return (
 
             <DefaultListPage
+                         icon="pi pi-lock"
                          pageTitle="Permissões"
                          prepareInsert={this.props.prepareInsert}
                          prepareEditar={this.props.prepareEditar}

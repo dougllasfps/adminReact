@@ -1,6 +1,7 @@
 import React from 'react'
 import {Field} from 'react-final-form'
 import {PickList} from 'primereact/picklist';
+import {Panel} from 'primereact/panel';
 
 import DefaultFormPage from '../../templates/DefaultFormPage'
 
@@ -39,6 +40,7 @@ class PermissaoForm extends React.Component {
 
         return (
             <DefaultFormPage
+                icon="pi pi-lock"
                 entity={entity}
                 handleSubmit={this.onSubmit}
                 handleCancel={this.props.cancel}
@@ -66,17 +68,19 @@ class PermissaoForm extends React.Component {
 
                 <div className="p-grid">
                     <div className="p-md-12">
-                        <PickList   showSourceControls={false}
-                                    showTargetControls={false}                                    
-                                    source={this.props.modulosDisponiveis} 
-                                    target={this.props.modulosAdicionados} 
-                                    itemTemplate={this.moduloTemplate}  
-                                    sourceHeader="Disponíveis" 
-                                    targetHeader="Selecionados"
-                                    onChange={ (e) => this.onModulosChange(e) } 
-                                    responsive={true} />
+                        <Panel header="Módulos">
+                            <PickList   showSourceControls={false}
+                                        showTargetControls={false}                                    
+                                        source={this.props.modulosDisponiveis} 
+                                        target={this.props.modulosAdicionados} 
+                                        itemTemplate={this.moduloTemplate}  
+                                        sourceHeader="Disponíveis" 
+                                        targetHeader="Selecionados"
+                                        onChange={ (e) => this.onModulosChange(e) } 
+                                        responsive={true} />
+                        </Panel>
                     </div>
-                </div>
+                </div>                
 
             </DefaultFormPage>
         )
