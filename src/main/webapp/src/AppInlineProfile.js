@@ -20,16 +20,16 @@ export class AppInlineProfile extends Component {
         return  (
             <div className="profile">
                 <div>
-                    <img src="assets/layout/images/profile.png" alt="" />
+                    <img src="assets/layout/images/avatar_2.png" alt="" />
                 </div>
                 <a className="profile-link" onClick={this.onClick}>
-                    <span className="username">Claire Williams</span>
+                    <span className="username">Dougllas Sousa</span>
                     <i className="pi pi-fw pi-cog"/>
                 </a>
                 <ul className={classNames({'profile-expanded': this.state.expanded})}>
-                    <li><a><i className="pi pi-fw pi-user"/><span>Account</span></a></li>
-                    <li><a><i className="pi pi-fw pi-inbox"/><span>Notifications</span><span className="menuitem-badge">2</span></a></li>
-                    <li><a><i className="pi pi-fw pi-power-off"/><span>Logout</span></a></li>
+                    <li><a><i className="pi pi-fw pi-user"/><span>Conta</span></a></li>
+                    <li><a><i className="pi pi-fw pi-inbox"/><span>Notificações</span><span className="menuitem-badge">2</span></a></li>
+                    <li><a><i className="pi pi-fw pi-power-off"/><span>Sair</span></a></li>
                 </ul>
             </div>
         );
