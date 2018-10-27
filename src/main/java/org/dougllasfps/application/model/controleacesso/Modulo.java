@@ -21,8 +21,8 @@ public class Modulo implements Serializable, BaseEntity {
     @Column
     private String label;
 
-    @OneToMany(mappedBy = "modulo")
-    private List<ModuloPermissao> permissoes;
+//    @OneToMany(mappedBy = "modulo")
+//    private List<ModuloPermissao> permissoes;
 
     public Modulo() {
     }
@@ -81,11 +81,11 @@ public class Modulo implements Serializable, BaseEntity {
         return "Module [id=" + this.id + ", description=" + this.descricao + ", label=" + this.label + "]";
     }
 
-    public List<ModuloPermissao> getPermissoes() {
-        return permissoes;
-    }
-
-    public void setPermissoes(List<ModuloPermissao> permissoes) {
-        this.permissoes = permissoes;
-    }
+//    public List<ModuloPermissao> getPermissoes() {
+//        return permissoes;
+//    }
+//
+//    public void setPermissoes(List<ModuloPermissao> permissoes) {
+//        this.permissoes = permissoes;
+//    }
 }

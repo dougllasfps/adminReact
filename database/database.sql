@@ -16,6 +16,20 @@ create table controle_acesso.modulo_permissao(
   cd_permissao bigint
 );
 
+create table controle_acesso.grupo(
+  id bigserial not null primary key ,
+  label varchar(20) ,
+  descricao varchar (30),
+  nivel integer,
+  cd_modulo bigint
+);
+
+create table controle_acesso.grupo_permissao(
+  id bigserial not null primary key ,
+  cd_grupo bigint not null,
+  cd_permissao bigint not null
+);
+
 alter table controle_acesso.modulo_permissao
 add constraint fk_modulo_perm_permissao
 foreign key (cd_permissao)
@@ -26,3 +40,17 @@ add constraint fk_modulo_perm_modulo
 foreign key (cd_modulo)
 references controle_acesso.modulo (id);
 
+alter table controle_acesso.grupo
+add constraint fk_grupo_modulo
+foreign key (cd_modulo)
+references controle_acesso.modulo (id);
+
+alter table controle_acesso.grupo_permissao
+add constraint fk_grupo_permissao_grupo
+foreign key (cd_grupo)
+references controle_acesso.grupo (id);
+
+alter table controle_acesso.grupo_permissao
+add constraint fk_grupo_permissao_permissao
+foreign key (cd_permissao)
+references controle_acesso.permissao (id);

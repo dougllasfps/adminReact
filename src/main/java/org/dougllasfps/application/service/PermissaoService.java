@@ -2,9 +2,9 @@ package org.dougllasfps.application.service;
 
 import org.dougllasfps.application.exception.ValidationException;
 import org.dougllasfps.application.model.controleacesso.Modulo;
-import org.dougllasfps.application.model.controleacesso.ModuloPermissao;
+//import org.dougllasfps.application.model.controleacesso.ModuloPermissao;
 import org.dougllasfps.application.model.controleacesso.Permissao;
-import org.dougllasfps.application.repository.ModuloPermissaoRepository;
+//import org.dougllasfps.application.repository.ModuloPermissaoRepository;
 import org.dougllasfps.application.repository.ModuloRepository;
 import org.dougllasfps.application.repository.PermissaoRepository;
 import org.dougllasfps.application.service.generic.impl.AbstractServiceImpl;
@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -23,8 +24,8 @@ import java.util.stream.Collectors;
 @Service
 public class PermissaoService extends AbstractServiceImpl<Permissao, PermissaoRepository> implements Serializable{
 
-    @Autowired
-    private ModuloPermissaoRepository moduloPermissaoRepository;
+//    @Autowired
+//    private ModuloPermissaoRepository moduloPermissaoRepository;
     @Autowired
     private ModuloRepository moduloRepository;
 
@@ -45,8 +46,12 @@ public class PermissaoService extends AbstractServiceImpl<Permissao, PermissaoRe
 
     }
 
-    public List<ModuloPermissao> obterModulos(Permissao permissao){
-        return  moduloPermissaoRepository.findByPermissao(permissao);
+//    public List<ModuloPermissao> obterModulos(Permissao permissao){
+//        return  moduloPermissaoRepository.findByPermissao(permissao);
+//    }
+
+    public Optional<Permissao> findAndLoadById(Long id){
+        return getRepository().findOneByIdFetchModulos(id);
     }
 
     public List<Modulo> obterModulosNaoAssociados(Permissao permissao){
@@ -77,8 +82,8 @@ public class PermissaoService extends AbstractServiceImpl<Permissao, PermissaoRe
     }
 
     private void atualizarModulos(Permissao permissao) {
-        moduloPermissaoRepository.saveAll(permissao.getModulos());
-        List<Long> idModulosSalvos = permissao.getModulos().stream().map(ModuloPermissao::getId).collect(Collectors.toList());
-        moduloPermissaoRepository.deleteAllByPermissaoAndIdNotIn(permissao, idModulosSalvos);
+//        moduloPermissaoRepository.saveAll(permissao.getModulos());
+//        List<Long> idModulosSalvos = permissao.getModulos().stream().map(ModuloPermissao::getId).collect(Collectors.toList());
+//        moduloPermissaoRepository.deleteAllByPermissaoAndIdNotIn(permissao, idModulosSalvos);
     }
 }

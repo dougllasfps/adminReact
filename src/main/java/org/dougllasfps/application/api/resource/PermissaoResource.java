@@ -3,7 +3,6 @@ package org.dougllasfps.application.api.resource;
 
 import org.dougllasfps.application.api.ResponseData;
 import org.dougllasfps.application.model.controleacesso.Modulo;
-import org.dougllasfps.application.model.controleacesso.ModuloPermissao;
 import org.dougllasfps.application.model.controleacesso.Permissao;
 import org.dougllasfps.application.model.controleacesso.dto.PermissaoDTO;
 import org.dougllasfps.application.model.converter.ModuloDtoConverter;
@@ -37,20 +36,9 @@ public class PermissaoResource extends CrudResource<PermissaoDTO, PermissaoServi
         return ResponseEntity.ok(ResponseData.of(dtoConverter.toDto().convert(result)));
     }
 
-    @GetMapping("/{id}/modulos")
-    public ResponseEntity findModulos(@PathVariable("id") Long id){
-        Optional<Permissao> entity = getService().find(id);
-
-        if(!entity.isPresent()){
-            return ResponseEntity.badRequest().body(ResponseData.ofError("Entidade não encontrada para o id passado."));
-        }
-
-        return ResponseEntity.ok(ResponseData.of(getService().obterModulos(entity.get())));
-    }
-
-    @GetMapping("/{id}/alldata")
+    @GetMapping("/{id}")
     public ResponseEntity loadEntityForm(@PathVariable("id") Long id){
-        Optional<Permissao> entity = getService().find(id);
+        Optional<Permissao> entity = getService().findAndLoadById(id);
 
         if(!entity.isPresent()){
             return ResponseEntity.badRequest().body(ResponseData.ofError("Entidade não encontrada para o id passado."));
@@ -58,12 +46,8 @@ public class PermissaoResource extends CrudResource<PermissaoDTO, PermissaoServi
 
         Permissao permissao = entity.get();
 
-        List<ModuloPermissao> modulos   = getService().obterModulos(permissao);
-        List<Modulo> modulosDisponiveis = getService().obterModulosNaoAssociados(permissao);
-
-        permissao.setModulos(modulos);
         PermissaoDTO dto = getDtoConverter().toDto().convert(permissao);
-
+        List<Modulo> modulosDisponiveis = getService().obterModulosNaoAssociados(permissao);
         dto.setModulosNaoAdicionados(moduloDtoConverter.toDto().convert(modulosDisponiveis));
 
         return ResponseEntity.ok(ResponseData.of(dto));

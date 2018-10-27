@@ -4,7 +4,7 @@ import org.dougllasfps.application.model.BaseEntity;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.List;
+import java.util.Set;
 
 /**
  * Criado por dougllas.sousa em 09/10/2018.
@@ -28,11 +28,17 @@ public class Grupo implements Serializable, BaseEntity {
     private Integer nivel;
 
     @ManyToOne
-    @JoinColumn(name = "fk_modulo")
+    @JoinColumn(name = "cd_modulo")
     private Modulo modulo;
 
-    @OneToMany( mappedBy = "grupo")
-    private List<GrupoPermissao> grupoPermissaoList;
+    @ManyToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE})
+    @JoinTable(
+        name = "grupo_permissao",
+        schema = "controle_acesso",
+        joinColumns = @JoinColumn(name = "cd_grupo", referencedColumnName = "id"),
+        inverseJoinColumns = @JoinColumn(name = "cd_permissao", referencedColumnName = "id")
+    )
+    private Set<Permissao> permissoes;
 
     public Long getId() {
         return id;
@@ -74,12 +80,12 @@ public class Grupo implements Serializable, BaseEntity {
         this.modulo = modulo;
     }
 
-    public List<GrupoPermissao> getGrupoPermissaoList() {
-        return grupoPermissaoList;
+    public Set<Permissao> getPermissoes() {
+        return permissoes;
     }
 
-    public void setGrupoPermissaoList(List<GrupoPermissao> grupoPermissaoList) {
-        this.grupoPermissaoList = grupoPermissaoList;
+    public void setPermissoes(Set<Permissao> permissoes) {
+        this.permissoes = permissoes;
     }
 
     @Override
@@ -116,7 +122,6 @@ public class Grupo implements Serializable, BaseEntity {
                 ", descricao='" + descricao + '\'' +
                 ", nivel=" + nivel +
                 ", modulo=" + modulo +
-                ", grupoPermissaoList=" + grupoPermissaoList +
                 '}';
     }
 }

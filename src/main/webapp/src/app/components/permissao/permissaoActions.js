@@ -44,7 +44,7 @@ export function prepareInsert(){
 export function prepareEditar( entity ){
     return dispatch => {
         axios
-            .get(`${BASE_URL}/${entity.id}/alldata`)
+            .get(`${BASE_URL}/${entity.id}`)
             .then( resp => {
                 dispatch( prepareFormToUpdate(resp.data.data) )
             }).catch(e => {

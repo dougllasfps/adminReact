@@ -19,6 +19,7 @@ public class PermissaoDTO implements Serializable, BaseEntity {
 
     @NotEmpty(message = "{campo.label.obrigatorio}")
     private String label;
+
     private List<ModuloDTO> modulos;
 
     private List<ModuloDTO> modulosNaoAdicionados;

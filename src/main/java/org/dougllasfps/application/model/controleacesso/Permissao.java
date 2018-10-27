@@ -4,7 +4,9 @@ import org.dougllasfps.application.model.BaseEntity;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 //import org.springframework.security.core.GrantedAuthority;
 
@@ -26,8 +28,14 @@ public class Permissao implements BaseEntity {
     @Column(name = "label")
     private String label;
 
-    @OneToMany(mappedBy = "permissao", fetch = FetchType.LAZY)
-    private List<ModuloPermissao> modulos;
+    @ManyToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE})
+    @JoinTable(
+            name = "modulo_permissao",
+            schema = "controle_acesso",
+            joinColumns = @JoinColumn(name = "cd_permissao", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "cd_modulo")
+    )
+    private Set<Modulo> modulos;
 
     public Permissao(String descricao, String label) {
         this.descricao = descricao;
@@ -64,13 +72,13 @@ public class Permissao implements BaseEntity {
         return "Permissão [id=" + this.id + ", descricao=" + this.descricao + "]";
     }
 
-    public List<ModuloPermissao> getModulos() {
+    public Set<Modulo> getModulos() {
         if(modulos == null)
-            modulos = new ArrayList<>();
+            modulos = new HashSet<>();
         return modulos;
     }
 
-    public void setModulos(List<ModuloPermissao> modulos) {
+    public void setModulos(Set<Modulo> modulos) {
         this.modulos = modulos;
     }
 }
