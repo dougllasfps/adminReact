@@ -31,7 +31,7 @@ public class Grupo implements Serializable, BaseEntity {
     @JoinColumn(name = "cd_modulo")
     private Modulo modulo;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE})
+    @ManyToMany(cascade = {CascadeType.PERSIST})
     @JoinTable(
         name = "grupo_permissao",
         schema = "controle_acesso",

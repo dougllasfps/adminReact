@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { find as genericFind, submit as genericSubmit, getList as genericGetList } from '../../api/generic/reduxUtil'
 
-import {GRUPO_FORM,GRUPO_ALL,GRUPO_FIND,GRUPO_PAGE_MODE_CHANGED,BASE_URL,NEW_ENTITY} from './GrupoService'
+import {GRUPO_FORM,GRUPO_ALL,GRUPO_FIND,GRUPO_PAGE_MODE_CHANGED,BASE_URL} from './GrupoService'
 import { showSuccessMessage, showErrorMessage } from '../../../components/messages/messages'
 import ComponentUtils from '../../../components/util/ComponentUtils'
 
@@ -34,13 +34,6 @@ export function remove(id){
     }
 }
 
-export function prepareInsert(){
-    return [
-        toForm(NEW_ENTITY),
-        pageMode(ComponentUtils.INSERT_STATUS)
-    ]
-}
-
 export function prepareEditar( entity ){
     return dispatch => {
         axios
@@ -59,6 +52,8 @@ export function prepareEditar( entity ){
 function prepareFormToUpdate( entity ){
     return [
         toForm(entity),
+        setModulo(entity.modulo),
+        setPermissoes(entity.permissoes),
         pageMode(ComponentUtils.UPDATE_STATUS)
     ]
 }
@@ -93,4 +88,25 @@ export function setPermissoes(permissoes){
         type: 'GRUPO_PERMISSAO_CHANGED',
         payload: permissoes
     }
+}
+
+
+export function prepareInsert(){
+    return dispatch => {
+        axios.get(`${BASE_URL}/novo`)
+            .then( resp => {
+                dispatch(newEntityToForm(resp.data))
+            }).catch(error => {
+
+            })
+    }
+}
+
+function newEntityToForm(entity){
+    return [
+        toForm(entity),
+        setModulo(entity.modulo),
+        setPermissoes([]),
+        pageMode(ComponentUtils.INSERT_STATUS)
+    ]
 }

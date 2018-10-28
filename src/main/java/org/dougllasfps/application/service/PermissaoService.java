@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * Criado por dougllas.sousa em 10/10/2018.
@@ -67,6 +68,9 @@ public class PermissaoService extends AbstractServiceImpl<Permissao, PermissaoRe
     }
 
     public List<Modulo> obterModulosNaoAssociados(Permissao permissao){
+        if(!Optional.ofNullable(permissao).map(Permissao::getId).isPresent()){
+            return moduloRepository.findAll();
+        }
         return moduloRepository.findModulosNotInPermissao(permissao);
     }
 
@@ -77,18 +81,17 @@ public class PermissaoService extends AbstractServiceImpl<Permissao, PermissaoRe
 
     @Override
     public Permissao save(Permissao permissao) {
-        return saveOrUpdate(permissao);
+        // dá erro ao inserir permissao com modulos já salvo no banco
+        Set<Modulo> modulos = permissao.getModulos();
+        permissao.setModulos(null);
+
+        super.save(permissao);
+        permissao.setModulos(modulos);
+        return getRepository().save(permissao);
     }
 
     @Override
     public Permissao update(Permissao permissao) {
-        return saveOrUpdate(permissao);
-    }
-
-    @Override
-    @Transactional
-    public Permissao saveOrUpdate(Permissao permissao) {
-        super.save(permissao);
-        return permissao;
+        return super.update(permissao);
     }
 }

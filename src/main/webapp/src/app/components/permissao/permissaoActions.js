@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { find as genericFind, submit as genericSubmit, getList as genericGetList } from '../../api/generic/reduxUtil'
 
-import {PERMISSAO_FORM,PERMISSAO_ALL,PERMISSAO_FIND,PERMISSAO_PAGE_MODE_CHANGED,BASE_URL,NEW_ENTITY} from './PermissaoService'
+import {PERMISSAO_FORM,PERMISSAO_ALL,PERMISSAO_FIND,PERMISSAO_PAGE_MODE_CHANGED,BASE_URL} from './PermissaoService'
 import { showSuccessMessage, showErrorMessage } from '../../../components/messages/messages'
 import ComponentUtils from '../../../components/util/ComponentUtils'
 
@@ -35,8 +35,21 @@ export function remove(id){
 }
 
 export function prepareInsert(){
+    return dispatch => {
+        axios.get(`${BASE_URL}/novo`)
+            .then( resp => {
+                dispatch(newEntityToForm(resp.data))
+            }).catch(error => {
+
+            })
+    }
+}
+
+function newEntityToForm(entity){
+    const modulos = {adicionados: entity.modulos, disponiveis: entity.modulosNaoAdicionados};
     return [
-        toForm(NEW_ENTITY),
+        toForm(entity),
+        setModulos(modulos),
         pageMode(ComponentUtils.INSERT_STATUS)
     ]
 }
@@ -58,7 +71,6 @@ export function prepareEditar( entity ){
 
 function prepareFormToUpdate( entity ){
     const modulos = {adicionados: entity.modulos, disponiveis: entity.modulosNaoAdicionados};
-    console.log('modulos ', modulos)
     return [
         toForm(entity),
         setModulos(modulos),

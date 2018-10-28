@@ -28,7 +28,7 @@ public class Permissao implements BaseEntity {
     @Column(name = "label")
     private String label;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
     @JoinTable(
             name = "modulo_permissao",
             schema = "controle_acesso",

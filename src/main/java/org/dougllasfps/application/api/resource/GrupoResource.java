@@ -35,8 +35,16 @@ public class GrupoResource extends CrudResource<GrupoDTO, GrupoService, GrupoDto
         return null;
     }
 
+    @GetMapping("/novo")
+    public ResponseEntity novo(){
+        GrupoDTO dto = new GrupoDTO();
+        List<Modulo> allModulos = moduloService.findAll();
+        dto.setModulosDisponiveis(moduloDtoConverter.toDto().convert(allModulos));
+        return ResponseEntity.ok(dto);
+    }
+
     @GetMapping("/{id}")
-    public ResponseEntity loadEntityForm(@PathVariable("id") Long id){
+    public ResponseEntity findOne(@PathVariable("id") Long id){
         Optional<Grupo> entity = getService().findAndLoadById(id);
 
         if(!entity.isPresent()){

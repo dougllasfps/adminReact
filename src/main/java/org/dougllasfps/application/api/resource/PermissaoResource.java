@@ -40,8 +40,16 @@ public class PermissaoResource extends CrudResource<PermissaoDTO, PermissaoServi
         return ResponseEntity.ok(ResponseData.of(dtoConverter.toDto().convert(result)));
     }
 
+    @GetMapping("/novo")
+    public ResponseEntity novo(){
+        PermissaoDTO dto = new PermissaoDTO();
+        List<Modulo> modulosDisponiveis = getService().obterModulosNaoAssociados(null);
+        dto.setModulosNaoAdicionados(moduloDtoConverter.toDto().convert(modulosDisponiveis));
+        return ResponseEntity.ok(dto);
+    }
+
     @GetMapping("/{id}")
-    public ResponseEntity loadEntityForm(@PathVariable("id") Long id){
+    public ResponseEntity findOne( @PathVariable("id") Long id ){
         Optional<Permissao> entity = getService().findAndLoadById(id);
 
         if(!entity.isPresent()){
