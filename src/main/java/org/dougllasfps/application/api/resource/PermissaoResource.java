@@ -26,8 +26,12 @@ public class PermissaoResource extends CrudResource<PermissaoDTO, PermissaoServi
     private ModuloDtoConverter moduloDtoConverter;
 
     @GetMapping("/find")
-    public ResponseEntity find( @RequestParam("descricao") String descricao, @RequestParam("label") String label){
-        List<Permissao> result = getService().find(new Permissao(descricao, label));
+    public ResponseEntity find(
+            @RequestParam(value = "descricao", required =false) String descricao,
+            @RequestParam(value = "label", required =false) String label,
+            @RequestParam(value = "idmodulo", required = false) Long idModulo
+    ){
+        List<Permissao> result = getService().find( new Permissao(descricao, label), idModulo );
 
         if(result.isEmpty()){
             return new ResponseEntity(ResponseData.ofWarning("Nenhum item encontrado."), HttpStatus.NOT_FOUND);

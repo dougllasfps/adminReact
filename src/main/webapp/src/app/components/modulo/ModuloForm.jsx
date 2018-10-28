@@ -7,12 +7,18 @@ import DefaultFormPage from '../../templates/DefaultFormPage'
 
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
-import {cancel, submit} from './moduloActions'
+import {cancel, submit, pageMode} from './moduloActions'
+
+import ComponentUtils from '../../../components/util/ComponentUtils'
 
 const NEW_ENTITY = {descricao:'', label: ''}
 
-
 class ModuloForm extends React.Component{
+
+    componentWillUnmount(){
+        this.props.pageMode(ComponentUtils.SEARCH_STATUS)
+    }
+
 
     render(){
         const entity = this.props.entity || NEW_ENTITY
@@ -69,5 +75,5 @@ const mapStateToProps = state => ({
     entity: state.modulos.entity
 })
 
-const mapDispatchToProps = dispatch => bindActionCreators ( {cancel, submit}, dispatch)
+const mapDispatchToProps = dispatch => bindActionCreators ( {cancel, submit, pageMode}, dispatch)
 export default connect(mapStateToProps,mapDispatchToProps) (ModuloForm)

@@ -2,6 +2,7 @@ package org.dougllasfps.application.service.generic.impl;
 
 import org.dougllasfps.application.model.BaseEntity;
 import org.dougllasfps.application.repository.FullRepository;
+import org.dougllasfps.application.repository.PermissaoSpecs;
 import org.dougllasfps.application.service.generic.DemandPaginationService;
 import org.dougllasfps.application.service.generic.AbstractService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

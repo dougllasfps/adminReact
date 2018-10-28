@@ -7,27 +7,43 @@ import org.dougllasfps.application.model.controleacesso.Permissao;
 //import org.dougllasfps.application.repository.ModuloPermissaoRepository;
 import org.dougllasfps.application.repository.ModuloRepository;
 import org.dougllasfps.application.repository.PermissaoRepository;
+import org.dougllasfps.application.repository.PermissaoSpecs;
 import org.dougllasfps.application.service.generic.impl.AbstractServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 /**
  * Criado por dougllas.sousa em 10/10/2018.
  */
-
 @Service
 public class PermissaoService extends AbstractServiceImpl<Permissao, PermissaoRepository> implements Serializable{
 
-//    @Autowired
-//    private ModuloPermissaoRepository moduloPermissaoRepository;
     @Autowired
     private ModuloRepository moduloRepository;
+
+    public List<Permissao> find(Permissao filtro, Long idModulo) {
+        Specification<Permissao> specs = Specification.where ( (root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.conjunction());
+
+        if(filtro.getDescricao() != null && !"".equals(filtro.getDescricao().trim())){
+            specs = specs.and(PermissaoSpecs.descricaoLike(filtro.getDescricao()));
+        }
+
+        if(filtro.getLabel() != null && !"".equals(filtro.getLabel().trim())){
+            specs = specs.and(PermissaoSpecs.labelLike(filtro.getLabel()));
+        }
+
+        if(idModulo != null){
+            specs = specs.and(PermissaoSpecs.hasModulo(idModulo));
+        }
+
+        return getRepository().findAll(specs);
+    }
 
     @Override
     public void validateSave(Permissao permissao) {
@@ -45,10 +61,6 @@ public class PermissaoService extends AbstractServiceImpl<Permissao, PermissaoRe
         e.throwIfHasErrors();
 
     }
-
-//    public List<ModuloPermissao> obterModulos(Permissao permissao){
-//        return  moduloPermissaoRepository.findByPermissao(permissao);
-//    }
 
     public Optional<Permissao> findAndLoadById(Long id){
         return getRepository().findOneByIdFetchModulos(id);
@@ -77,13 +89,6 @@ public class PermissaoService extends AbstractServiceImpl<Permissao, PermissaoRe
     @Transactional
     public Permissao saveOrUpdate(Permissao permissao) {
         super.save(permissao);
-        atualizarModulos(permissao);
         return permissao;
-    }
-
-    private void atualizarModulos(Permissao permissao) {
-//        moduloPermissaoRepository.saveAll(permissao.getModulos());
-//        List<Long> idModulosSalvos = permissao.getModulos().stream().map(ModuloPermissao::getId).collect(Collectors.toList());
-//        moduloPermissaoRepository.deleteAllByPermissaoAndIdNotIn(permissao, idModulosSalvos);
     }
 }

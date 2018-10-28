@@ -9,13 +9,13 @@ const INITIAL_STATE = {
 }
 
 export default function(state = INITIAL_STATE, action) {
-    state = createReducer('PERMISSAO', state, action)
+    state = createReducer('GRUPO', state, action)
 
     switch(action.type){
-        case 'PERMISSAO_MODULOS_ADD_REMOVE':
-            return {...state, modulosAdicionados: action.modulos.adicionados, modulosDisponiveis: action.modulos.disponiveis}
-        case 'PERMISSAO_POR_MODULO':
-            return {...state, permissoesModulo: action.payload }
+        case 'GRUPO_MODULO_CHANGED':
+            return {...state, moduloSelecionado: action.payload}
+        case 'GRUPO_PERMISSAO_CHANGED':
+            return {...state, permissoesSelecionadas: action.payload}
         default:
             return state;
     }

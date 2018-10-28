@@ -7,11 +7,17 @@ import DefaultFormPage from '../../templates/DefaultFormPage'
 
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
-import {cancel, submit,setModulos} from './permissaoActions'
+import {cancel,submit,setModulos, pageMode} from './permissaoActions'
+
+import ComponentUtils from '../../../components/util/ComponentUtils'
 
 const NEW_ENTITY = {descricao:'', label: '', modulos : []}
 
 class PermissaoForm extends React.Component {    
+
+    componentWillUnmount(){
+        this.props.pageMode(ComponentUtils.SEARCH_STATUS)
+    }
 
     onSubmit = (permissao) => {
         permissao = {...permissao, modulos: this.props.modulosAdicionados}
@@ -93,5 +99,5 @@ const mapStateToProps = state => ({
     modulosDisponiveis: state.permissoes.modulosDisponiveis
 })
 
-const mapDispatchToProps = dispatch => bindActionCreators ( {cancel, submit,setModulos}, dispatch)
+const mapDispatchToProps = dispatch => bindActionCreators ( {cancel, submit,setModulos,pageMode}, dispatch)
 export default connect(mapStateToProps,mapDispatchToProps) (PermissaoForm)

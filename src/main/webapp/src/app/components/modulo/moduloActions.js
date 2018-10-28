@@ -59,7 +59,7 @@ function toForm(entity){
     }
 }
 
-function pageMode(mode){
+export function pageMode(mode){
     return {
         type: MODULO_PAGE_MODE_CHANGED,
         payload: mode

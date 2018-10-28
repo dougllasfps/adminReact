@@ -1,21 +1,21 @@
 import axios from 'axios'
 import { find as genericFind, submit as genericSubmit, getList as genericGetList } from '../../api/generic/reduxUtil'
 
-import {PERMISSAO_FORM,PERMISSAO_ALL,PERMISSAO_FIND,PERMISSAO_PAGE_MODE_CHANGED,BASE_URL,NEW_ENTITY} from './PermissaoService'
+import {GRUPO_FORM,GRUPO_ALL,GRUPO_FIND,GRUPO_PAGE_MODE_CHANGED,BASE_URL,NEW_ENTITY} from './GrupoService'
 import { showSuccessMessage, showErrorMessage } from '../../../components/messages/messages'
 import ComponentUtils from '../../../components/util/ComponentUtils'
 
-export function find( permissao ){
-    let query = `descricao=${permissao.descricao}&label=${permissao.label}`;
-    return genericFind( BASE_URL, query, PERMISSAO_FIND)
+export function find( grupo ){
+    let query = `descricao=${grupo.descricao}&label=${grupo.label}`;
+    return genericFind( BASE_URL, query, GRUPO_FIND)
 }
 
-export function submit(permissao){
-    return genericSubmit(BASE_URL, permissao, pageMode(ComponentUtils.SEARCH_STATUS) )
+export function submit(grupo){
+    return genericSubmit(BASE_URL, grupo, pageMode(ComponentUtils.SEARCH_STATUS) )
 }
 
 export function getList(){
-    return genericGetList(BASE_URL, PERMISSAO_ALL)
+    return genericGetList(BASE_URL, GRUPO_ALL)
 }
 
 export function remove(id){
@@ -57,25 +57,22 @@ export function prepareEditar( entity ){
 }
 
 function prepareFormToUpdate( entity ){
-    const modulos = {adicionados: entity.modulos, disponiveis: entity.modulosNaoAdicionados};
-    console.log('modulos ', modulos)
     return [
         toForm(entity),
-        setModulos(modulos),
         pageMode(ComponentUtils.UPDATE_STATUS)
     ]
 }
 
 function toForm(entity){
     return {
-        type: PERMISSAO_FORM,
+        type: GRUPO_FORM,
         payload: entity
     }
 }
 
 export function pageMode(mode){
     return {
-        type: PERMISSAO_PAGE_MODE_CHANGED,
+        type: GRUPO_PAGE_MODE_CHANGED,
         payload: mode
     }
 }
@@ -84,26 +81,16 @@ export function cancel(){
     return pageMode(ComponentUtils.SEARCH_STATUS)
 }
 
-export function setModulos( {adicionados,disponiveis} ){
-    return{
-        type: 'PERMISSAO_MODULOS_ADD_REMOVE',
-        modulos: {
-            adicionados,
-            disponiveis
-        }
+export function setModulo(modulo){
+    return {
+        type: 'GRUPO_MODULO_CHANGED',
+        payload: modulo
     }
 }
 
-export function findByModulo(idModulo){
-    return dispatch => {
-        axios.get(`${BASE_URL}/find?idmodulo=${idModulo}`)
-            .then(resp => {
-                dispatch({
-                    type: 'PERMISSAO_POR_MODULO',
-                    payload: resp.data.data
-                })
-            }).catch( error => {
-
-            })
+export function setPermissoes(permissoes){
+    return {
+        type: 'GRUPO_PERMISSAO_CHANGED',
+        payload: permissoes
     }
 }
