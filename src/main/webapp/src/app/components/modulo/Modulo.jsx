@@ -1,27 +1,72 @@
 import React from 'react'
 
+import ModuloService from './ModuloService'
 import ModuloList from './ModuloList'
 import ModuloForm from './ModuloForm'
 import ComponentUtils from '../../../components/util/ComponentUtils'
 
-import {connect} from 'react-redux'
+export const ModuloContext = React.createContext()
 
-class Modulo extends React.Component{
+export default class Modulo extends React.Component{
+
+    state = {
+        entity: {descricao:'', label: ''},
+        entitySearch: {descricao:'', label: ''},
+        list: [],
+        pageStatus : ComponentUtils.SEARCH_STATUS,
+    }
+
+    constructor(props){
+        super(props)
+        this.service = new ModuloService()
+    }
+
+    find = () => {
+        let result = this.service.find( {query : `descricao=${this.state.entitySearch.descricao}&label=${this.state.entitySearch.label}`} )
+        this.setState({...this.state, list: result})
+    }
+
+    prepareInsert = () => {
+        let newEntity = this.service.createNewEntity();
+        this.setState({...this.state, entity : newEntity, pageStatus: ComponentUtils.INSERT_STATUS })
+    }
+
+    prepareEditar = (modulo) => {
+        this.setState({...this.state, entity : modulo, pageStatus: ComponentUtils.UPDATE_STATUS })
+    }
+
+    delete = (id) =>{
+        this.service.delete(id)
+    }
+
+    findAll = () => {
+        this.service.findAll()
+                        .then(resp => {
+                            this.setState({...this.state, list: resp.data.data})
+                        })        
+    }
+    
+    renderPage = () => {
+        if(this.state.pageStatus === ComponentUtils.SEARCH_STATUS){
+            return ( <ModuloList /> )
+        }else{
+            return ( <ModuloForm /> )
+        }
+    }
 
     render(){
-        let pageStatus = this.props.pageStatus ? this.props.pageStatus : ComponentUtils.SEARCH_STATUS;       
-        let renderList = pageStatus === ComponentUtils.SEARCH_STATUS
-
-        if(renderList){
-            return (
-                <ModuloList />
-            )
-        }else{
-            return (
-                <ModuloForm />
-            )
-        }
+        return (
+            <ModuloContext.Provider value={{
+                state : this.state,
+                find : this.find,
+                prepareInsert : this.prepareInsert,
+                prepareEditar: this.prepareEditar,
+                delete : this.delete,
+                findAll: this.findAll
+            }}>
+                {this.renderPage(this.state.pageStatus)}
+            </ModuloContext.Provider>
+        )
     }
 }
 
-export default connect( state => ({ pageStatus: state.modulos.pageStatus })) (Modulo)

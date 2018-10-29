@@ -69,8 +69,11 @@ export default class DefaultList extends React.Component{
         return dynamicColumns;
     }
 
-    render(){
+    componentWillMount(){
+        this.props.getList()
+    }
 
+    render(){
         const confirmDeleteFooter = (
             <div>
                 <Button label="Confirma" icon="pi pi-check" onClick={this.confirmDelete} className="p-button-secondary" />

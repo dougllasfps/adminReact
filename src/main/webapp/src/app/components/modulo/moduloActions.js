@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { find as genericFind, submit as genericSubmit,  getList as genericGetList} from '../../api/generic/reduxUtil'
 
-import {MODULO_FORM, MODULO_ALL,MODULO_FIND,MODULO_PAGE_MODE_CHANGED,BASE_URL,NEW_ENTITY} from './ModuloService'
+import {MODULO_FORM, MODULO_ALL,MODULO_FIND,MODULO_PAGE_MODE_CHANGED,BASE_URL} from './ModuloService'
 import { showSuccessMessage, showErrorMessage } from '../../../components/messages/messages'
 import ComponentUtils from '../../../components/util/ComponentUtils'
 
@@ -40,7 +40,7 @@ export function remove(id){
 
 export function prepareInsert(){
     return [
-        toForm(NEW_ENTITY),
+        toForm({}),
         pageMode(ComponentUtils.INSERT_STATUS)
     ]
 }

@@ -93,7 +93,7 @@ class GrupoForm extends React.Component {
                                        onSelectionChange={ e => this.onPermissaoSelect(e.data) }
                                        selection={this.props.permissoesSelecionadas}>
                                 <Column selectionMode="multiple" style={{width:'3em'}}/>
-                                <Column field="id" header="Código" style={{width:'10em', 'text-align': 'center'}}/>
+                                <Column field="id" header="Código" style={{width:'10em', 'textAlign': 'center'}}/>
                                 <Column field="descricao" header="Descricao" />
                                 <Column field="label" header="Label" />
                             </DataTable>
