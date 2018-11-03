@@ -20,8 +20,8 @@ class GrupoForm extends React.Component {
 
     componentWillUnmount(){
         this.props.pageMode(ComponentUtils.SEARCH_STATUS)
+        this.props.setPermissoes([])
     }
-
 
     onSubmit = (grupo) => {
         let entity = {...grupo, modulo: this.props.moduloSelecionado, permissoes: this.props.permissoesSelecionadas}
@@ -29,8 +29,10 @@ class GrupoForm extends React.Component {
     }
 
     onModuloSelect = (modulo) => {
-        this.props.findPermissoesByModulo(modulo.id)
-        this.props.setModulo(modulo)
+        if(modulo){
+            this.props.findPermissoesByModulo(modulo.id)
+            this.props.setModulo(modulo)
+        }
     }
 
     onPermissaoSelect = (permissoes) => {
@@ -41,6 +43,8 @@ class GrupoForm extends React.Component {
         const entity = this.props.entity || NEW_ENTITY
         let submitLabel = entity.id ? 'Atualizar' : 'Salvar';
         let pageTitle   = entity.id ? 'Atualização de Grupo' : 'Cadastro de Grupo';
+
+        this.onModuloSelect(this.props.moduloSelecionado)
 
         const modulosSelect =  entity.modulosDisponiveis ?  entity.modulosDisponiveis.map( m => ({ label: m.descricao , value: m} ) ) : []
 
@@ -93,7 +97,7 @@ class GrupoForm extends React.Component {
                                        onSelectionChange={ e => this.onPermissaoSelect(e.data) }
                                        selection={this.props.permissoesSelecionadas}>
                                 <Column selectionMode="multiple" style={{width:'3em'}}/>
-                                <Column field="id" header="Código" style={{width:'10em', 'text-align': 'center'}}/>
+                                <Column field="id" header="Código" style={{width:'10em', textAlign: 'center'}}/>
                                 <Column field="descricao" header="Descricao" />
                                 <Column field="label" header="Label" />
                             </DataTable>

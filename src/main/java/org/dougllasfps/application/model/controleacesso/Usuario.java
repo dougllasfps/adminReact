@@ -1,14 +1,14 @@
 package org.dougllasfps.application.model.controleacesso;
 
-import org.dougllasfps.application.model.controleacesso.dto.UsuarioDTO;
-import org.dougllasfps.application.model.corporativo.Pessoa;
+import org.dougllasfps.application.model.BaseEntity;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Set;
 
 @Entity
 @Table(name = "usuario", schema = "controle_acesso")
-public class Usuario implements Serializable {
+public class Usuario implements Serializable, BaseEntity {
 
     @Id
     @Column
@@ -21,19 +21,23 @@ public class Usuario implements Serializable {
     @Column
     private String senha;
 
+    @Column
+    private String nome; 
+
+    @Column
+    private String email;
+
     @Column(name = "hash_recupera_senha" )
     private String hashRecuperacaoSenha;
 
-    @ManyToOne
-    @JoinColumn( name = "fk_modulo", referencedColumnName = "id")
-    private Modulo modulo;
-
-    @ManyToOne
-    @JoinColumn( name = "fk_pessoa", referencedColumnName = "id")
-    private Pessoa pessoa;
-
-    @Transient
-    private UsuarioDTO dto;
+    @ManyToMany
+    @JoinTable(
+        name = "usuario_grupo",
+        schema = "controle_acesso",
+        joinColumns = @JoinColumn(name = "cd_usuario", referencedColumnName = "id"),
+        inverseJoinColumns = @JoinColumn(name = "cd_grupo", referencedColumnName = "id")
+    )
+    private Set<Grupo> grupos;
 
     public Long getId() {
         return id;
@@ -59,6 +63,22 @@ public class Usuario implements Serializable {
         this.senha = senha;
     }
 
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public String getHashRecuperacaoSenha() {
         return hashRecuperacaoSenha;
     }
@@ -67,71 +87,37 @@ public class Usuario implements Serializable {
         this.hashRecuperacaoSenha = hashRecuperacaoSenha;
     }
 
-    public Modulo getModulo() {
-        return modulo;
+    public Set<Grupo> getGrupos() {
+        return grupos;
     }
 
-    public void setModulo(Modulo modulo) {
-        this.modulo = modulo;
-    }
-
-    public Pessoa getPessoa() {
-        return pessoa;
-    }
-
-    public void setPessoa(Pessoa pessoa) {
-        this.pessoa = pessoa;
-    }
-
-    public UsuarioDTO getDto() {
-        if(dto == null)
-            dto = new UsuarioDTO(this);
-        return dto;
-    }
-
-    public void setDto(UsuarioDTO dto) {
-        this.dto = dto;
+    public void setGrupos(Set<Grupo> grupos) {
+        this.grupos = grupos;
     }
 
     @Override
-    public boolean equals(Object object) {
-        if (this == object) return true;
-        if (!(object instanceof Usuario)) return false;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
-        Usuario usuario = (Usuario) object;
+        Usuario usuario = (Usuario) o;
 
-        if (getId() != null ? !getId().equals(usuario.getId()) : usuario.getId() != null) return false;
-        if (getLogin() != null ? !getLogin().equals(usuario.getLogin()) : usuario.getLogin() != null) return false;
-        if (getSenha() != null ? !getSenha().equals(usuario.getSenha()) : usuario.getSenha() != null) return false;
-        if (getHashRecuperacaoSenha() != null ? !getHashRecuperacaoSenha().equals(usuario.getHashRecuperacaoSenha()) : usuario.getHashRecuperacaoSenha() != null)
-            return false;
-        if (getModulo() != null ? !getModulo().equals(usuario.getModulo()) : usuario.getModulo() != null) return false;
-        if (getPessoa() != null ? !getPessoa().equals(usuario.getPessoa()) : usuario.getPessoa() != null) return false;
-        return getDto() != null ? getDto().equals(usuario.getDto()) : usuario.getDto() == null;
+        if (id != null ? !id.equals(usuario.id) : usuario.id != null) return false;
+        if (login != null ? !login.equals(usuario.login) : usuario.login != null) return false;
+        if (senha != null ? !senha.equals(usuario.senha) : usuario.senha != null) return false;
+        if (nome != null ? !nome.equals(usuario.nome) : usuario.nome != null) return false;
+        if (email != null ? !email.equals(usuario.email) : usuario.email != null) return false;
+        return hashRecuperacaoSenha != null ? hashRecuperacaoSenha.equals(usuario.hashRecuperacaoSenha) : usuario.hashRecuperacaoSenha == null;
     }
 
     @Override
     public int hashCode() {
-        int result = getId() != null ? getId().hashCode() : 0;
-        result = 31 * result + (getLogin() != null ? getLogin().hashCode() : 0);
-        result = 31 * result + (getSenha() != null ? getSenha().hashCode() : 0);
-        result = 31 * result + (getHashRecuperacaoSenha() != null ? getHashRecuperacaoSenha().hashCode() : 0);
-        result = 31 * result + (getModulo() != null ? getModulo().hashCode() : 0);
-        result = 31 * result + (getPessoa() != null ? getPessoa().hashCode() : 0);
-        result = 31 * result + (getDto() != null ? getDto().hashCode() : 0);
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (login != null ? login.hashCode() : 0);
+        result = 31 * result + (senha != null ? senha.hashCode() : 0);
+        result = 31 * result + (nome != null ? nome.hashCode() : 0);
+        result = 31 * result + (email != null ? email.hashCode() : 0);
+        result = 31 * result + (hashRecuperacaoSenha != null ? hashRecuperacaoSenha.hashCode() : 0);
         return result;
-    }
-
-    @Override
-    public String toString() {
-        return "Usuario{" +
-                "id=" + id +
-                ", login='" + login + '\'' +
-                ", senha='" + senha + '\'' +
-                ", hashRecuperacaoSenha='" + hashRecuperacaoSenha + '\'' +
-                ", modulo=" + modulo +
-                ", pessoa=" + pessoa +
-                ", dto=" + dto +
-                '}';
     }
 }

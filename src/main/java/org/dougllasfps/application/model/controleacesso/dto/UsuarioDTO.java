@@ -2,68 +2,90 @@ package org.dougllasfps.application.model.controleacesso.dto;
 
 import org.dougllasfps.application.model.controleacesso.Usuario;
 
+import javax.validation.constraints.NotEmpty;
+import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 
 /**
  * Criado por dougllas.sousa em 09/10/2018.
  */
-public class UsuarioDTO {
+public class UsuarioDTO implements Serializable {
 
-    private Usuario usuario;
-    private String senhaRedigitada;
-    private String novaSenha;
-    private String novaSenhaRedigitada;
+    @NotEmpty
+    private String login;
+    @NotEmpty
+    private String nome;
+    @NotEmpty
+    private String senha;
+    private String senhaRepeat;
+    @NotEmpty
+    private String email;
+    private String hashRecuperacaoSenha;
+    private List<GrupoDTO> gruposSelecionados;
+    private List<GrupoDTO> gruposDisponiveis;
 
-    public UsuarioDTO(Usuario usuario) {
-        Objects.requireNonNull(usuario);
-        this.usuario = usuario;
+    public String getLogin() {
+        return login;
     }
 
-    public String getSenhaRedigitada() {
-        return senhaRedigitada;
+    public void setLogin(String login) {
+        this.login = login;
     }
 
-    public void setSenhaRedigitada(String senhaRedigitada) {
-        this.senhaRedigitada = senhaRedigitada;
+    public String getNome() {
+        return nome;
     }
 
-    public String getNovaSenha() {
-        return novaSenha;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
-    public void setNovaSenha(String novaSenha) {
-        this.novaSenha = novaSenha;
+    public String getSenha() {
+        return senha;
     }
 
-    public String getNovaSenhaRedigitada() {
-        return novaSenhaRedigitada;
+    public void setSenha(String senha) {
+        this.senha = senha;
     }
 
-    public void setNovaSenhaRedigitada(String novaSenhaRedigitada) {
-        this.novaSenhaRedigitada = novaSenhaRedigitada;
+    public String getSenhaRepeat() {
+        return senhaRepeat;
     }
 
-    @Override
-    public boolean equals(Object object) {
-        if (this == object) return true;
-        if (!(object instanceof UsuarioDTO)) return false;
-
-        UsuarioDTO that = (UsuarioDTO) object;
-
-        if (usuario != null ? !usuario.equals(that.usuario) : that.usuario != null) return false;
-        if (getSenhaRedigitada() != null ? !getSenhaRedigitada().equals(that.getSenhaRedigitada()) : that.getSenhaRedigitada() != null)
-            return false;
-        if (getNovaSenha() != null ? !getNovaSenha().equals(that.getNovaSenha()) : that.getNovaSenha() != null)
-            return false;
-        return getNovaSenhaRedigitada() != null ? getNovaSenhaRedigitada().equals(that.getNovaSenhaRedigitada()) : that.getNovaSenhaRedigitada() == null;
+    public void setSenhaRepeat(String senhaRepeat) {
+        this.senhaRepeat = senhaRepeat;
     }
 
-    @Override
-    public int hashCode() {
-        int result = usuario != null ? usuario.hashCode() : 0;
-        result = 31 * result + (getSenhaRedigitada() != null ? getSenhaRedigitada().hashCode() : 0);
-        result = 31 * result + (getNovaSenha() != null ? getNovaSenha().hashCode() : 0);
-        result = 31 * result + (getNovaSenhaRedigitada() != null ? getNovaSenhaRedigitada().hashCode() : 0);
-        return result;
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getHashRecuperacaoSenha() {
+        return hashRecuperacaoSenha;
+    }
+
+    public void setHashRecuperacaoSenha(String hashRecuperacaoSenha) {
+        this.hashRecuperacaoSenha = hashRecuperacaoSenha;
+    }
+
+    public List<GrupoDTO> getGruposSelecionados() {
+        return gruposSelecionados;
+    }
+
+    public void setGruposSelecionados(List<GrupoDTO> gruposSelecionados) {
+        this.gruposSelecionados = gruposSelecionados;
+    }
+
+    public List<GrupoDTO> getGruposDisponiveis() {
+        return gruposDisponiveis;
+    }
+
+    public void setGruposDisponiveis(List<GrupoDTO> gruposDisponiveis) {
+        this.gruposDisponiveis = gruposDisponiveis;
     }
 }

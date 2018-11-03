@@ -98,7 +98,7 @@ class App extends Component {
             {label: 'Modulos', icon: 'pi pi-fw pi-th-large', command: () => {window.location = '#/modulos'}},
             {label: 'Permissões', icon: 'pi pi-fw pi-lock', command: () => {window.location = '#/permissoes'}},
             {label: 'Grupos', icon: 'pi pi-fw pi-users', command: () => {window.location = '#/grupos'}},
-            {label: 'Usuários', icon: 'pi pi-fw pi-user', command: () => {window.location = '#/modulos'}},
+            {label: 'Usuários', icon: 'pi pi-fw pi-user', command: () => {window.location = '#/usuarios'}},
             {
                 label: 'Opções do Menu' , icon: 'pi pi-fw pi-cog',
                 items: [

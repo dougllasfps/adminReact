@@ -4,17 +4,12 @@ package org.dougllasfps.application.api.resource;
 import org.dougllasfps.application.api.ResponseData;
 import org.dougllasfps.application.model.controleacesso.Grupo;
 import org.dougllasfps.application.model.controleacesso.Modulo;
-import org.dougllasfps.application.model.controleacesso.Permissao;
 import org.dougllasfps.application.model.controleacesso.dto.GrupoDTO;
-import org.dougllasfps.application.model.controleacesso.dto.PermissaoDTO;
-import org.dougllasfps.application.model.converter.GrupoDtoConverter;
+import org.dougllasfps.application.model.converter.DefaultGrupoDtoConverter;
 import org.dougllasfps.application.model.converter.ModuloDtoConverter;
-import org.dougllasfps.application.model.converter.PermissaoDtoConverter;
 import org.dougllasfps.application.service.GrupoService;
 import org.dougllasfps.application.service.ModuloService;
-import org.dougllasfps.application.service.PermissaoService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,7 +18,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/grupos")
-public class GrupoResource extends CrudResource<GrupoDTO, GrupoService, GrupoDtoConverter>{
+public class GrupoResource extends CrudResource<GrupoDTO, GrupoService, DefaultGrupoDtoConverter>{
 
     @Autowired
     private ModuloService moduloService;
@@ -61,7 +56,7 @@ public class GrupoResource extends CrudResource<GrupoDTO, GrupoService, GrupoDto
     }
 
     @Override
-    public GrupoDtoConverter getDtoConverter() {
+    public DefaultGrupoDtoConverter getDtoConverter() {
         return dtoConverter;
     }
 }

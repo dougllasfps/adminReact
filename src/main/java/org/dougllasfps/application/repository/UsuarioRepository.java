@@ -1,4 +1,6 @@
 package org.dougllasfps.application.repository;
 
-public interface UsuarioRepository {
+import org.dougllasfps.application.model.controleacesso.Usuario;
+
+public interface UsuarioRepository extends FullRepository<Usuario> {
 }

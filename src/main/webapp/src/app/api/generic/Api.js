@@ -2,65 +2,23 @@ import axios from 'axios'
 
 export default class Api{
 
-    constructor(){}
-
-    get = (url, onSuccess, onError) => {
-        return 
-            axios.get(url)
-                    .then( resp => {
-                        if(onSuccess){
-                            onSuccess(resp)
-                        }
-                    })
-                    .catch( error => {
-                        if(onError){
-                            onError(error)
-                        }
-                    })
+    doOnAxios = ( {method, url, data}) => {
+        return data ? axios[method](url, data) : axios[method](url)
     }
 
-    post = (url, data, onSuccess, onError) => {
-        return 
-            axios.post(url, data)
-                    .then( resp => {
-                        if(onSuccess){
-                            onSuccess(resp)
-                        }
-                    })
-                    .catch( error => {
-                        if(onError){
-                            onError(error)
-                        }
-                    })
+    get = (url) => {
+        return this.doOnAxios({method :'get', url})
     }
 
-    put = (url, data, onSuccess, onError) => {
-        return 
-            axios.put(url, data)
-                    .then( resp => {
-                        if(onSuccess){
-                            onSuccess(resp)
-                        }
-                    })
-                    .catch( error => {
-                        if(onError){
-                            onError(error)
-                        }
-                    })
+    post = (url, data) => {
+        return this.doOnAxios({method: 'post', url, data})
     }
 
-    delete = (url, onSuccess, onError) => {
-        return 
-            axios.delete(url)
-                    .then( resp => {
-                        if(onSuccess){
-                            onSuccess(resp)
-                        }
-                    })
-                    .catch( error => {
-                        if(onError){
-                            onError(error)
-                        }
-                    })
+    put = (url, data) => {
+        return this.doOnAxios({method: 'put', url, data})
+    }
+
+    delete = (url) => {
+        return this.doOnAxios( {method :'delete',url} )
     }
 }

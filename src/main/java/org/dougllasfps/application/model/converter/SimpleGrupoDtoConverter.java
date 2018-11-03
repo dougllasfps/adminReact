@@ -9,18 +9,42 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class DefaultGrupoDtoConverter implements RequestResponseConverter<Grupo, GrupoDTO> {
+public class SimpleGrupoDtoConverter implements RequestResponseConverter<Grupo, GrupoDTO> {
 
     @Autowired
-    private ModelMapper modelMapper;
+    private ModuloDtoConverter moduloDtoConverter;
 
     @Override
     public DtoConverter<Grupo, GrupoDTO> toDto() {
-        return entity -> modelMapper.map(entity, GrupoDTO.class);
+        return entity -> {
+
+            GrupoDTO dto = new GrupoDTO();
+            dto.setDescricao(entity.getDescricao());
+            dto.setLabel(entity.getLabel());
+            dto.setId(entity.getId());
+
+            if(entity.getModulo() != null){
+                dto.setModulo(moduloDtoConverter.toDto().convert(entity.getModulo()));
+            }
+
+            return dto;
+        };
     }
 
     @Override
     public DtoConverter<GrupoDTO, Grupo> toEntity() {
-         return dto -> modelMapper.map(dto, Grupo.class);
+        return dto -> {
+
+            Grupo entity = new Grupo();
+            entity.setDescricao(dto.getDescricao());
+            entity.setLabel(dto.getLabel());
+            entity.setId(dto.getId());
+
+            if(entity.getModulo() != null){
+                entity.setModulo(moduloDtoConverter.toEntity().convert(dto.getModulo()));
+            }
+
+            return entity;
+        };
     }
 }

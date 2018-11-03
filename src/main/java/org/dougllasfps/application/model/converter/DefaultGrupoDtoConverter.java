@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class GrupoDtoConverter implements RequestResponseConverter<Grupo, GrupoDTO> {
+public class DefaultGrupoDtoConverter implements RequestResponseConverter<Grupo, GrupoDTO> {
 
     @Autowired
     private ModelMapper modelMapper;

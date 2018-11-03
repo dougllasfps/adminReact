@@ -47,7 +47,6 @@ public class Grupo implements Serializable, BaseEntity {
     public void setId(Long id) {
         this.id = id;
     }
-
     public String getLabel() {
         return label;
     }

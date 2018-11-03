@@ -6,9 +6,6 @@ const ComponentUtils = {
         const name = target.name;
     
         reactComponent.setState({ [name]: value })
-
-        console.log('comp ', reactComponent)
-        console.log('value ', name)
     }
 }
 

@@ -30,6 +30,31 @@ create table controle_acesso.grupo_permissao(
   cd_permissao bigint not null
 );
 
+create table controle_acesso.usuario(
+  id bigserial not null primary key ,
+  login varchar(20),
+  senha varchar (200),
+  nome varchar (100),
+  email varchar (100),
+  hash_recupera_senha varchar (200)
+);
+
+create table controle_acesso.usuario_grupo (
+  id bigserial not null primary key ,
+  cd_grupo bigint,
+  cd_usuario bigint
+);
+
+alter table controle_acesso.usuario_grupo
+add constraint fk_usuario_grupo_grupo
+foreign key (cd_grupo)
+references controle_acesso.grupo (id);
+
+alter table controle_acesso.usuario_grupo
+add constraint fk_usuario_grupo_usuario
+foreign key (cd_usuario)
+references controle_acesso.usuario (id);
+
 alter table controle_acesso.modulo_permissao
 add constraint fk_modulo_perm_permissao
 foreign key (cd_permissao)
